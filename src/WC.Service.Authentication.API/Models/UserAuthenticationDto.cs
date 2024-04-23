@@ -23,12 +23,12 @@ public class UserAuthenticationDto : DtoBase
     public string Role { get; init; } = string.Empty;
 
     /// <summary>
-    /// The date and time when the user credentials were created.
+    /// The date and time when the user authentication were created.
     /// </summary>
     public DateTime CreatedAt { get; init; }
 
     /// <summary>
-    /// The last update date and time of the user credentials.
+    /// The last update date and time of the user authentication.
     /// </summary>
     public DateTime? UpdatedAt { get; init; }
 }
