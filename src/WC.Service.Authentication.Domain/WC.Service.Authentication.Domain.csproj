@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="8.0.0" />
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
+      <PackageReference Include="WC.Library.Domain" Version="1.0.2" />
+      <PackageReference Include="WC.Library.Shared" Version="1.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WC.Service.Authentication.Data.PostgreSql\WC.Service.Authentication.Data.PostgreSql.csproj" />
+      <ProjectReference Include="..\WC.Service.Authentication.Domain.Abstractions\WC.Service.Authentication.Domain.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

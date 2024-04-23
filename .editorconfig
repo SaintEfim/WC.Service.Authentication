@@ -1,0 +1,10 @@
+root = true
+
+[*]
+
+# ReSharper properties
+resharper_xmldoc_space_before_self_closing = false
+
+# ReSharper inspection severities
+resharper_convert_to_primary_constructor_highlighting = none
+
