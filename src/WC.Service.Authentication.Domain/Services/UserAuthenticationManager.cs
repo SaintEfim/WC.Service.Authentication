@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Service.Authify.Domain.Models.Responses;
+using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Services;
 using WC.Library.Shared.Constants;
 using WC.Library.Shared.Exceptions;
@@ -21,7 +22,7 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
     IUserAuthenticationManager
 {
     private readonly IJwtHelper _jwtHelper;
-    private readonly IHashHelper _hashHelper;
+    private readonly IBCryptPasswordHasher _passwordHasher;
     private readonly ILogger<UserAuthenticationManager> _logger;
     private readonly string _accessHours;
     private readonly string _refreshHours;
@@ -32,11 +33,11 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         IUserAuthenticationRepository repository,
         IEnumerable<IValidator> validators,
         IConfiguration config,
-        IJwtHelper jwtHelper, IHashHelper hashHelper) : base(mapper, logger, repository, validators)
+        IJwtHelper jwtHelper, IBCryptPasswordHasher passwordHasher) : base(mapper, logger, repository, validators)
     {
         _logger = logger;
         _jwtHelper = jwtHelper;
-        _hashHelper = hashHelper;
+        _passwordHasher = passwordHasher;
         _accessHours = config.GetValue<string>("HoursSettings:AccessHours")!;
         _refreshHours = config.GetValue<string>("HoursSettings:RefreshHours")!;
         _accessSecretKey = config.GetValue<string>("ApiSettings:AccessSecret")!;
@@ -55,11 +56,10 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
             throw new NotFoundException($"User with email {loginRequest.Email} not found.");
         }
 
-        if (!_hashHelper.Verify(loginRequest.Password, user.Password))
+        if (!_passwordHasher.Verify(loginRequest.Password, user.Password))
         {
             throw new AuthenticationFailedException("Invalid password.");
         }
-
 
         var accessToken = await
             _jwtHelper.GenerateToken(user.Id.ToString(), user.Role, _accessSecretKey,
@@ -110,12 +110,12 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
             throw new NotFoundException($"User with email {resetPassword.Email} not found.");
         }
 
-        if (!_hashHelper.Verify(resetPassword.Password, oldUser.Password))
+        if (!_passwordHasher.Verify(resetPassword.Password, oldUser.Password))
         {
             throw new PasswordMismatchException("Passwords do not match.");
         }
 
-        oldUser.Password = _hashHelper.Hash(resetPassword.NewPassword);
+        oldUser.Password = _passwordHasher.Hash(resetPassword.NewPassword);
         oldUser.UpdatedAt = DateTime.UtcNow;
 
         await Repository.Update(oldUser, cancellationToken);
@@ -141,7 +141,7 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         ArgumentException.ThrowIfNullOrEmpty(email);
 
         var userExists = await Repository.Get(cancellationToken);
-        var user = userExists.SingleOrDefault(u => _hashHelper.Verify(email, u.Email));
+        var user = userExists.SingleOrDefault(x => x.Email == email);
 
         return user;
     }
