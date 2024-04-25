@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using WC.Library.Domain.Services.Validators;
 using WC.Service.Authentication.Domain.Models.Requests;
 
 namespace WC.Service.Authentication.Domain.Services.Validators.ResetPasswordModelValidator;
@@ -11,7 +12,6 @@ public class ResetPasswordModelPasswordValidator : AbstractValidator<ResetPasswo
             .SetValidator(new PasswordValidator());
         RuleFor(x => x.NewPassword)
             .SetValidator(new PasswordValidator())
-            .NotEqual(x => x.Password)
-            .WithMessage("New password must be different from the current password");
+            .NotEqual(x => x.Password);
     }
 }
