@@ -5,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Services;
+using WC.Library.JwtTokenGenerator;
 using WC.Library.Shared.Constants;
 using WC.Library.Shared.Exceptions;
 using WC.Service.Authentication.Data.Models;
 using WC.Service.Authentication.Data.Repository;
 using WC.Service.Authentication.Domain.Exceptions;
-using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models;
 using WC.Service.Authentication.Domain.Models.Requests;
 using WC.Service.Authentication.Domain.Models.Responses;
@@ -21,7 +21,7 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         UserAuthenticationModel, UserAuthenticationEntity>,
     IUserAuthenticationManager
 {
-    private readonly IJwtHelper _jwtHelper;
+    private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IBCryptPasswordHasher _passwordHasher;
     private readonly ILogger<UserAuthenticationManager> _logger;
     private readonly string _accessHours;
@@ -33,10 +33,11 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         IUserAuthenticationRepository repository,
         IEnumerable<IValidator> validators,
         IConfiguration config,
-        IJwtHelper jwtHelper, IBCryptPasswordHasher passwordHasher) : base(mapper, logger, repository, validators)
+        IJwtTokenGenerator jwtTokenGenerator, IBCryptPasswordHasher passwordHasher) : base(mapper, logger, repository,
+        validators)
     {
         _logger = logger;
-        _jwtHelper = jwtHelper;
+        _jwtTokenGenerator = jwtTokenGenerator;
         _passwordHasher = passwordHasher;
         _accessHours = config.GetValue<string>("HoursSettings:AccessHours")!;
         _refreshHours = config.GetValue<string>("HoursSettings:RefreshHours")!;
@@ -63,10 +64,10 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         }
 
         var accessToken = await
-            _jwtHelper.GenerateToken(user.Id.ToString(), user.Role, _accessSecretKey,
+            _jwtTokenGenerator.GenerateToken(user.Id.ToString(), user.Role, _accessSecretKey,
                 TimeSpan.Parse(_accessHours), cancellationToken);
         var refreshToken = await
-            _jwtHelper.GenerateToken(user.Id.ToString(), user.Role, _refreshSecretKey,
+            _jwtTokenGenerator.GenerateToken(user.Id.ToString(), user.Role, _refreshSecretKey,
                 TimeSpan.Parse(_refreshHours), cancellationToken);
 
         return new LoginResponseModel
@@ -85,10 +86,10 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         var (userId, userRole) = await DecodeRefreshToken(refreshToken, cancellationToken);
 
         var newAccessToken = await
-            _jwtHelper.GenerateToken(userId, userRole, _accessSecretKey,
+            _jwtTokenGenerator.GenerateToken(userId, userRole, _accessSecretKey,
                 TimeSpan.Parse(_accessHours), cancellationToken);
         var newRefreshToken = await
-            _jwtHelper.GenerateToken(userId, userRole, _refreshSecretKey,
+            _jwtTokenGenerator.GenerateToken(userId, userRole, _refreshSecretKey,
                 TimeSpan.Parse(_refreshHours), cancellationToken);
 
         return new LoginResponseModel
@@ -128,7 +129,7 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
 
-        var user = await _jwtHelper.DecodeToken(refreshToken, _refreshSecretKey, cancellationToken);
+        var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _refreshSecretKey, cancellationToken);
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var userRole = user.FindFirst(ClaimTypes.Role)?.Value;
 

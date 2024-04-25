@@ -2,8 +2,8 @@
 using FluentValidation;
 using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Services;
+using WC.Library.JwtTokenGenerator;
 using WC.Service.Authentication.Data.PostgreSql;
-using WC.Service.Authentication.Domain.Helpers;
 
 namespace WC.Service.Authentication.Domain;
 
@@ -13,7 +13,7 @@ public class ServiceAuthenticationDomainModule : Module
         ContainerBuilder builder)
     {
         builder.RegisterModule<ServiceAuthenticationDataPostgreSqlModule>();
-        
+
         builder.RegisterAssemblyTypes(ThisAssembly)
             .AsClosedTypesOf(typeof(IDataProvider<>))
             .AsImplementedInterfaces();
@@ -26,7 +26,7 @@ public class ServiceAuthenticationDomainModule : Module
             .AsClosedTypesOf(typeof(IValidator<>))
             .AsImplementedInterfaces();
 
-        builder.RegisterType<JwtHelper>().As<IJwtHelper>().SingleInstance();
+        builder.RegisterType<JwtTokenGenerator>().As<IJwtTokenGenerator>().SingleInstance();
         builder.RegisterType<BCryptPasswordHasher>().As<IBCryptPasswordHasher>().SingleInstance();
     }
 }
