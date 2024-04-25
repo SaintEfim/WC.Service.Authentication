@@ -3,7 +3,6 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Service.Authify.Domain.Models.Responses;
 using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Services;
 using WC.Library.Shared.Constants;
@@ -14,6 +13,7 @@ using WC.Service.Authentication.Domain.Exceptions;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models;
 using WC.Service.Authentication.Domain.Models.Requests;
+using WC.Service.Authentication.Domain.Models.Responses;
 
 namespace WC.Service.Authentication.Domain.Services;
 
@@ -49,7 +49,8 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
     {
         Validate(loginRequest);
 
-        var user = await GetUserByEmail(loginRequest.Email, cancellationToken);
+        var users = await Repository.Get(cancellationToken);
+        var user = users.SingleOrDefault(x => x.Email == loginRequest.Email);
 
         if (user == null)
         {
@@ -103,7 +104,8 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
     {
         Validate(resetPassword);
 
-        var oldUser = await GetUserByEmail(resetPassword.Email, cancellationToken);
+        var users = await Repository.Get(cancellationToken);
+        var oldUser = users.SingleOrDefault(x => x.Email == resetPassword.Email);
 
         if (oldUser == null)
         {
@@ -133,16 +135,5 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         if (userId != null && userRole != null) return (userId, userRole);
         _logger.LogError("Invalid token. Missing required claims.");
         throw new Exception("An error occurred while processing your request.");
-    }
-
-    private async Task<UserAuthenticationEntity?> GetUserByEmail(string email,
-        CancellationToken cancellationToken = default)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(email);
-
-        var userExists = await Repository.Get(cancellationToken);
-        var user = userExists.SingleOrDefault(x => x.Email == email);
-
-        return user;
     }
 }

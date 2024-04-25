@@ -1,4 +1,4 @@
-﻿namespace Service.Authify.Domain.Models.Responses;
+﻿namespace WC.Service.Authentication.Domain.Models.Responses;
 
 public class LoginResponseModel
 {
