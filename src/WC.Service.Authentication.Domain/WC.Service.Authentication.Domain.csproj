@@ -14,6 +14,8 @@
       <PackageReference Include="WC.Library.BCryptPasswordHash" Version="1.0.0" />
       <PackageReference Include="WC.Library.BCryptPasswordHash.Abstactions" Version="1.0.0" />
       <PackageReference Include="WC.Library.Domain" Version="1.0.2" />
+      <PackageReference Include="WC.Library.JwtTokenGenerator" Version="1.0.0" />
+      <PackageReference Include="WC.Library.JwtTokenGenerator.Abstractions" Version="1.0.0" />
       <PackageReference Include="WC.Library.Shared" Version="1.0.3" />
     </ItemGroup>
 
