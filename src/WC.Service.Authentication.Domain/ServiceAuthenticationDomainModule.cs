@@ -2,8 +2,9 @@
 using FluentValidation;
 using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Services;
-using WC.Library.JwtTokenGenerator;
 using WC.Service.Authentication.Data.PostgreSql;
+using WC.Service.Authentication.Domain.Helpers;
+using JwtTokenGenerator = WC.Service.Authentication.Domain.Helpers.JwtTokenGenerator;
 
 namespace WC.Service.Authentication.Domain;
 
