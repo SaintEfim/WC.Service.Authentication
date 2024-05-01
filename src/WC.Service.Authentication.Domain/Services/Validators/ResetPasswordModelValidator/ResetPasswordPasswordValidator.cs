@@ -4,9 +4,9 @@ using WC.Service.Authentication.Domain.Models.Requests;
 
 namespace WC.Service.Authentication.Domain.Services.Validators.ResetPasswordModelValidator;
 
-public class ResetPasswordModelPasswordValidator : AbstractValidator<ResetPasswordModel>
+public class ResetPasswordPasswordValidator : AbstractValidator<ResetPasswordModel>
 {
-    public ResetPasswordModelPasswordValidator()
+    public ResetPasswordPasswordValidator()
     {
         RuleFor(x => x.Password)
             .SetValidator(new PasswordValidator());

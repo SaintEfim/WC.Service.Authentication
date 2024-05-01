@@ -4,9 +4,9 @@ using WC.Service.Authentication.Domain.Models.Requests;
 
 namespace WC.Service.Authentication.Domain.Services.Validators.LoginRequestModelValidator;
 
-public class LoginRequestModelPasswordValidator : AbstractValidator<LoginRequestModel>
+public class LoginRequestPasswordValidator : AbstractValidator<LoginRequestModel>
 {
-    public LoginRequestModelPasswordValidator()
+    public LoginRequestPasswordValidator()
     {
         RuleFor(x => x.Password)
             .SetValidator(new PasswordValidator());
