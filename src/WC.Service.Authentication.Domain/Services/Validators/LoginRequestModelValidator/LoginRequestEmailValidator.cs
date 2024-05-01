@@ -2,11 +2,11 @@
 using WC.Library.Domain.Services.Validators;
 using WC.Service.Authentication.Domain.Models.Requests;
 
-namespace WC.Service.Authentication.Domain.Services.Validators.ResetPasswordModelValidator;
+namespace WC.Service.Authentication.Domain.Services.Validators.LoginRequestModelValidator;
 
-public class ResetPasswordModelEmailValidator : AbstractValidator<ResetPasswordModel>
+public class LoginRequestEmailValidator : AbstractValidator<LoginRequestModel>
 {
-    public ResetPasswordModelEmailValidator()
+    public LoginRequestEmailValidator()
     {
         RuleFor(x => x.Email)
             .SetValidator(new EmailValidator());

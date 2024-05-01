@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.Domain.Abstractions", "src\WC.Service.Authentication.Domain.Abstractions\WC.Service.Authentication.Domain.Abstractions.csproj", "{DF6EF22D-CEDD-4AB6-B450-5FB397B0510F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{DD771FBF-3459-4511-86AF-3D1F18142C39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.API.Test", "src\WC.Service.Authentication.API.Test\WC.Service.Authentication.API.Test.csproj", "{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +52,12 @@ Global
 		{DF6EF22D-CEDD-4AB6-B450-5FB397B0510F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF6EF22D-CEDD-4AB6-B450-5FB397B0510F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF6EF22D-CEDD-4AB6-B450-5FB397B0510F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD} = {DD771FBF-3459-4511-86AF-3D1F18142C39}
 	EndGlobalSection
 EndGlobal
