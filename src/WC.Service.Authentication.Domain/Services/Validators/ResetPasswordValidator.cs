@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using WC.Library.Domain.Services.Validators;
-using WC.Service.Authentication.Domain.Models.Requests;
+using WC.Service.Authentication.Domain.Models;
 
-namespace WC.Service.Authentication.Domain.Services.Validators.ResetPasswordModelValidator;
+namespace WC.Service.Authentication.Domain.Services.Validators;
 
 public class ResetPasswordValidator : AbstractValidator<ResetPasswordModel>
 {

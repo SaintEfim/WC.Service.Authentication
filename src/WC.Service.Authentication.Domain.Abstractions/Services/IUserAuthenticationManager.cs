@@ -1,7 +1,6 @@
 ﻿using WC.Library.Domain.Services;
 using WC.Service.Authentication.Domain.Models;
-using WC.Service.Authentication.Domain.Models.Requests;
-using WC.Service.Authentication.Domain.Models.Responses;
+using WC.Service.Authentication.Domain.Models.Login;
 
 namespace WC.Service.Authentication.Domain.Services;
 

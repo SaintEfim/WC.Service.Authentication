@@ -1,4 +1,4 @@
-﻿namespace WC.Service.Authentication.Domain.Models.Requests;
+﻿namespace WC.Service.Authentication.Domain.Models.Login;
 
 public class LoginRequestModel
 {

@@ -1,4 +1,4 @@
-﻿using WC.Service.Authentication.Domain.Models.Requests;
+﻿using WC.Service.Authentication.Domain.Models;
 
 namespace WC.Service.Authentication.Domain.Test.Services.Data;
 

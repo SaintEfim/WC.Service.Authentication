@@ -1,4 +1,4 @@
-﻿namespace WC.Service.Authentication.API.Models.ResponsesDto;
+﻿namespace WC.Service.Authentication.API.Models.Login;
 
 /// <summary>
 /// The person responsible for some object processing or the one who is currently executing some task.

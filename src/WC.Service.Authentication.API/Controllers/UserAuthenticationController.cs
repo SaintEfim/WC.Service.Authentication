@@ -5,10 +5,9 @@ using Swashbuckle.AspNetCore.Annotations;
 using WC.Library.Web.Controllers;
 using WC.Library.Web.Models;
 using WC.Service.Authentication.API.Models;
-using WC.Service.Authentication.API.Models.RequestsDto;
-using WC.Service.Authentication.API.Models.ResponsesDto;
+using WC.Service.Authentication.API.Models.Login;
 using WC.Service.Authentication.Domain.Models;
-using WC.Service.Authentication.Domain.Models.Requests;
+using WC.Service.Authentication.Domain.Models.Login;
 using WC.Service.Authentication.Domain.Services;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 

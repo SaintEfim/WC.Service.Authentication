@@ -12,8 +12,7 @@ using WC.Service.Authentication.Data.Repository;
 using WC.Service.Authentication.Domain.Exceptions;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models;
-using WC.Service.Authentication.Domain.Models.Requests;
-using WC.Service.Authentication.Domain.Models.Responses;
+using WC.Service.Authentication.Domain.Models.Login;
 
 namespace WC.Service.Authentication.Domain.Services;
 

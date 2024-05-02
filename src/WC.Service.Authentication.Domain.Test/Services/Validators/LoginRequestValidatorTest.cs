@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using FluentValidation.TestHelper;
-using WC.Service.Authentication.Domain.Services.Validators.LoginRequestModelValidator;
+using WC.Service.Authentication.Domain.Services.Validators;
 using WC.Service.Authentication.Domain.Test.Services.Data;
 
 namespace WC.Service.Authentication.Domain.Test.Services.Validators;

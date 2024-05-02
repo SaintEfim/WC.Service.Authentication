@@ -1,4 +1,4 @@
-﻿using WC.Service.Authentication.API.Models.RequestsDto;
+﻿using WC.Service.Authentication.API.Models.Login;
 
 namespace WC.Service.Authentication.API.Test.Validators.Data;
 

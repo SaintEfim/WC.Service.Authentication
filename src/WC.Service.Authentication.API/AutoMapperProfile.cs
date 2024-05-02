@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using WC.Service.Authentication.API.Models;
-using WC.Service.Authentication.API.Models.RequestsDto;
-using WC.Service.Authentication.API.Models.ResponsesDto;
+using WC.Service.Authentication.API.Models.Login;
 using WC.Service.Authentication.Domain.Models;
-using WC.Service.Authentication.Domain.Models.Requests;
-using WC.Service.Authentication.Domain.Models.Responses;
+using WC.Service.Authentication.Domain.Models.Login;
 
 namespace WC.Service.Authentication.API;
 
