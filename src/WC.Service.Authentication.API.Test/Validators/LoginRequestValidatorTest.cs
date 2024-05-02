@@ -36,7 +36,7 @@ public class LoginRequestValidatorTest
     public void LoginRequest_Negative_Create_New_Record_With_Password_Email()
     {
         var model = LoginRequestData.LoginRequestDto();
-        model.Password = "";
+        model.Password = string.Empty;
         var res = _validator.TestValidate(model);
         res.ShouldHaveAnyValidationError()
             .WithErrorMessage("'Password' must not be empty.")
