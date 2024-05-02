@@ -1,4 +1,4 @@
-﻿namespace WC.Service.Authentication.API.Models.RequestsDto;
+﻿namespace WC.Service.Authentication.API.Models;
 
 /// <summary>
 /// Represents the data transfer object for resetting a user's password.
@@ -11,10 +11,10 @@ public class ResetPasswordDto
     public string Email { get; set; } = string.Empty;
 
     /// <summary>
-    /// The password of the user.
+    /// The old password of the user.
     /// </summary>
-    public string Password { get; set; } = string.Empty;
-    
+    public string OldPassword { get; set; } = string.Empty;
+
     /// <summary>
     /// The new password of the user.
     /// </summary>

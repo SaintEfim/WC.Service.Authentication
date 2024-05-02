@@ -33,10 +33,10 @@ public class ResetPasswordValidatorTest
     }
 
     [Fact]
-    public void ResetPassword_Negative_Create_New_Record_With_Empty_Password()
+    public void ResetPassword_Negative_Create_New_Record_With_Empty_Old_Password()
     {
         var model = ResetPasswordData.ResetPasswordDto();
-        model.Password = string.Empty;
+        model.OldPassword = string.Empty;
         var res = _validator.TestValidate(model);
         res.ShouldHaveAnyValidationError()
             .WithErrorMessage("'Password' must not be empty.")
@@ -44,7 +44,7 @@ public class ResetPasswordValidatorTest
     }
 
     [Fact]
-    public void ResetPassword_Negative_Create_New_Record_With_Empty_NewPassword()
+    public void ResetPassword_Negative_Create_New_Record_With_Empty_New_Password()
     {
         var model = ResetPasswordData.ResetPasswordDto();
         model.NewPassword = string.Empty;

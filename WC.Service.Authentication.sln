@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{DD77
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.API.Test", "src\WC.Service.Authentication.API.Test\WC.Service.Authentication.API.Test.csproj", "{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.Domain.Test", "src\WC.Service.Authentication.Domain.Test\WC.Service.Authentication.Domain.Test.csproj", "{7E836AD9-F407-44E9-B491-33827688D807}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +58,13 @@ Global
 		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E836AD9-F407-44E9-B491-33827688D807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E836AD9-F407-44E9-B491-33827688D807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E836AD9-F407-44E9-B491-33827688D807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E836AD9-F407-44E9-B491-33827688D807}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{27220CB1-9EEC-4E28-BA7B-80AD3DC804CD} = {DD771FBF-3459-4511-86AF-3D1F18142C39}
+		{7E836AD9-F407-44E9-B491-33827688D807} = {DD771FBF-3459-4511-86AF-3D1F18142C39}
 	EndGlobalSection
 EndGlobal

@@ -7,6 +7,6 @@ public static class LoginRequestData
     public static readonly Func<LoginRequestDto> LoginRequestDto = () => new LoginRequestDto
     {
         Email = "Test@gmail.com",
-        Password = "Test1234"
+        Password = "Test1234@"
     };
 }
