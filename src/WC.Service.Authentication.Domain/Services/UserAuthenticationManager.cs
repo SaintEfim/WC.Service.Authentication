@@ -113,7 +113,7 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
             throw new NotFoundException($"User with email {resetPassword.Email} not found.");
         }
 
-        if (!_passwordHasher.Verify(resetPassword.Password, oldUser.Password))
+        if (!_passwordHasher.Verify(resetPassword.OldPassword, oldUser.Password))
         {
             throw new PasswordMismatchException("Passwords do not match.");
         }
@@ -128,7 +128,6 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
-
         var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _refreshSecretKey, cancellationToken);
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var userRole = user.FindFirst(ClaimTypes.Role)?.Value;

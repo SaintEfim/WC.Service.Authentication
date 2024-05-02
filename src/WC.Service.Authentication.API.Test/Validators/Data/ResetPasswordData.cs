@@ -1,4 +1,4 @@
-﻿using WC.Service.Authentication.API.Models.RequestsDto;
+﻿using WC.Service.Authentication.API.Models;
 
 namespace WC.Service.Authentication.API.Test.Validators.Data;
 
@@ -7,7 +7,7 @@ public static class ResetPasswordData
     public static readonly Func<ResetPasswordDto> ResetPasswordDto = () => new ResetPasswordDto
     {
         Email = "Test@gmail.com",
-        Password = "Test1234",
-        NewPassword = "Test12345"
+        OldPassword = "Test1234@",
+        NewPassword = "Test12345@"
     };
 }
