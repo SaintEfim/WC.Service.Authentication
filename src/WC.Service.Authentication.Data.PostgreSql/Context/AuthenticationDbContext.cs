@@ -3,9 +3,9 @@ using WC.Service.Authentication.Data.Models;
 
 namespace WC.Service.Authentication.Data.PostgreSql.Context;
 
-public sealed class UserAuthenticationDbContext : DbContext
+public sealed class AuthenticationDbContext : DbContext
 {
-    public UserAuthenticationDbContext(DbContextOptions<UserAuthenticationDbContext> options) : base(options)
+    public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options) : base(options)
     {
         // Database.Migrate();
     }
