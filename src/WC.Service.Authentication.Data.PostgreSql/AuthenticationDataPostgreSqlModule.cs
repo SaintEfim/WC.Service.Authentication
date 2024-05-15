@@ -5,7 +5,7 @@ using WC.Service.Authentication.Data.PostgreSql.Context;
 
 namespace WC.Service.Authentication.Data.PostgreSql;
 
-public class ServiceAuthenticationDataPostgreSqlModule : Module
+public class AuthenticationDataPostgreSqlModule : Module
 {
     protected override void Load(
         ContainerBuilder builder)
@@ -14,12 +14,12 @@ public class ServiceAuthenticationDataPostgreSqlModule : Module
             .AsClosedTypesOf(typeof(IRepository<>))
             .AsImplementedInterfaces();
 
-        builder.RegisterType<UserAuthenticationDbContextFactory>()
+        builder.RegisterType<AuthenticationDbContextFactory>()
             .AsSelf()
             .SingleInstance();
         
-        builder.Register(c => c.Resolve<UserAuthenticationDbContextFactory>().CreateDbContext())
-            .As<UserAuthenticationDbContext>()  
+        builder.Register(c => c.Resolve<AuthenticationDbContextFactory>().CreateDbContext())
+            .As<AuthenticationDbContext>()  
             .As<DbContext>()
             .InstancePerLifetimeScope();
     }
