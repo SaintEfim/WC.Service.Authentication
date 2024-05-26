@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Autofac" Version="8.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
       <PackageReference Include="WC.Library.Data.PostgreSql" Version="1.0.0" />
       <PackageReference Include="WC.Library.Domain.Abstractions" Version="1.0.1" />
     </ItemGroup>

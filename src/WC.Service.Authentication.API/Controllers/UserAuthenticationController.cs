@@ -57,7 +57,6 @@ public class UserAuthenticationController : CrudApiControllerBase<UserAuthentica
     public async Task<ActionResult<LoginResponseDto>> UserAuthenticationLogin(LoginRequestDto loginRequest,
         CancellationToken cancellationToken = default)
     {
-        Validate(loginRequest);
         var res = await Manager.Login(Mapper.Map<LoginRequestModel>(loginRequest), cancellationToken);
         return Ok(Mapper.Map<LoginResponseDto>(res));
     }
@@ -90,7 +89,6 @@ public class UserAuthenticationController : CrudApiControllerBase<UserAuthentica
     public async Task<IActionResult> UserAuthenticationResetPassword(ResetPasswordDto resetPassword,
         CancellationToken cancellationToken = default)
     {
-        Validate(resetPassword);
         await Manager.ResetPassword(Mapper.Map<ResetPasswordModel>(resetPassword), cancellationToken);
         return Ok();
     }
