@@ -17,8 +17,12 @@
     
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="13.0.1" />
-      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
-      <PackageReference Include="WC.Library.Web" Version="1.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.6.2" />
+      <PackageReference Include="WC.Library.Web" Version="1.0.7" />
     </ItemGroup>
 
     <ItemGroup>

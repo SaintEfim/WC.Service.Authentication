@@ -9,17 +9,25 @@ public class ResetPasswordValidator : AbstractValidator<ResetPasswordModel>
     public ResetPasswordValidator()
     {
         RuleFor(x => x.Email)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .SetValidator(new EmailValidator());
+            .NotEmpty();
+        
+        RuleFor(x => x.Email)
+            .SetValidator(new EmailValidator())
+            .When(x => !string.IsNullOrEmpty(x.Email));
+        
         RuleFor(x => x.OldPassword)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .SetValidator(new PasswordValidator());
-        RuleFor(x => x.NewPassword)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
+            .NotEmpty();
+        
+        RuleFor(x => x.OldPassword)
             .SetValidator(new PasswordValidator())
+            .When(x => !string.IsNullOrEmpty(x.OldPassword));
+        
+        RuleFor(x => x.NewPassword)
+            .NotEmpty();
+        
+        RuleFor(x => x.NewPassword)
+            .SetValidator(new PasswordValidator())
+            .When(x => !string.IsNullOrEmpty(x.NewPassword))
             .NotEqual(x => x.OldPassword).WithMessage("New password cannot be the same as the old password.");
     }
 }

@@ -9,12 +9,17 @@ public class LoginRequestValidator : AbstractValidator<LoginRequestModel>
     public LoginRequestValidator()
     {
         RuleFor(x => x.Email)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .SetValidator(new EmailValidator());
+            .NotEmpty();
+        
+        RuleFor(x => x.Email)
+            .SetValidator(new EmailValidator())
+            .When(x => !string.IsNullOrEmpty(x.Email));
+        
         RuleFor(x => x.Password)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .SetValidator(new PasswordValidator());
+            .NotEmpty();
+        
+        RuleFor(x => x.Password)
+            .SetValidator(new PasswordValidator())
+            .When(x => !string.IsNullOrEmpty(x.Password));
     }
 }
