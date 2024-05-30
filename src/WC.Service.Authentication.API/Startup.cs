@@ -17,7 +17,6 @@ internal sealed class Startup : StartupBase
     {
         base.ConfigureContainer(builder);
         builder.RegisterModule<AuthenticationDomainModule>();
-        builder.RegisterModule<AuthenticationDataPostgreSqlModule>();
         
         builder.RegisterAssemblyTypes(typeof(Program).Assembly)
             .AsClosedTypesOf(typeof(IValidator<>))
