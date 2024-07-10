@@ -1,43 +1,37 @@
 ﻿using System.Security.Claims;
-using AutoMapper;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using WC.Library.BCryptPasswordHash;
-using WC.Library.Domain.Services;
+using WC.Library.Domain.Models;
+using WC.Library.Domain.Services.Validators;
 using WC.Library.Shared.Constants;
-using WC.Library.Shared.Exceptions;
-using WC.Service.Authentication.Data.Models;
-using WC.Service.Authentication.Data.Repository;
 using WC.Service.Authentication.Domain.Exceptions;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models;
 using WC.Service.Authentication.Domain.Models.Login;
+using WC.Service.Employees.gRPC.Client.Clients;
+using WC.Service.Employees.gRPC.Client.Models.Employee;
 
 namespace WC.Service.Authentication.Domain.Services;
 
-public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManager, IUserAuthenticationRepository,
-        UserAuthenticationModel, UserAuthenticationEntity>,
-    IUserAuthenticationManager
+public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployeeAuthenticationManager
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IBCryptPasswordHasher _passwordHasher;
-    private readonly ILogger<UserAuthenticationManager> _logger;
+    private readonly IGreeterEmployeesClient _employeesClient;
     private readonly string _accessHours;
     private readonly string _refreshHours;
     private readonly string _accessSecretKey;
     private readonly string _refreshSecretKey;
 
-    public UserAuthenticationManager(IMapper mapper, ILogger<UserAuthenticationManager> logger,
-        IUserAuthenticationRepository repository,
-        IEnumerable<IValidator> validators,
+    public EmployeeAuthenticationManager(IEnumerable<IValidator> validators,
         IConfiguration config,
-        IJwtTokenGenerator jwtTokenGenerator, IBCryptPasswordHasher passwordHasher) : base(mapper, logger, repository,
-        validators)
+        IJwtTokenGenerator jwtTokenGenerator, IBCryptPasswordHasher passwordHasher,
+        IGreeterEmployeesClient employeesClient) : base(validators)
     {
-        _logger = logger;
         _jwtTokenGenerator = jwtTokenGenerator;
         _passwordHasher = passwordHasher;
+        _employeesClient = employeesClient;
         _accessHours = config.GetValue<string>("HoursSettings:AccessHours")!;
         _refreshHours = config.GetValue<string>("HoursSettings:RefreshHours")!;
         _accessSecretKey = config.GetValue<string>("ApiSettings:AccessSecret")!;
@@ -45,28 +39,23 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
     }
 
     public async Task<LoginResponseModel> Login(LoginRequestModel loginRequest,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
-        Validate(loginRequest);
-
-        var users = await Repository.Get(cancellationToken);
-        var user = users.SingleOrDefault(x => x.Email == loginRequest.Email);
-
-        if (user == null)
+        var employee = await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel
         {
-            throw new NotFoundException($"User with email {loginRequest.Email} not found.");
-        }
+            Email = loginRequest.Email
+        }, cancellationToken);
 
-        if (!_passwordHasher.Verify(loginRequest.Password, user.Password))
+        if (!_passwordHasher.Verify(loginRequest.Password, employee.Password))
         {
             throw new AuthenticationFailedException("Invalid password.");
         }
 
         var accessToken = await
-            _jwtTokenGenerator.GenerateToken(user.Id.ToString(), user.Role, _accessSecretKey,
+            _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role, _accessSecretKey,
                 TimeSpan.Parse(_accessHours), cancellationToken);
         var refreshToken = await
-            _jwtTokenGenerator.GenerateToken(user.Id.ToString(), user.Role, _refreshSecretKey,
+            _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role, _refreshSecretKey,
                 TimeSpan.Parse(_refreshHours), cancellationToken);
 
         return new LoginResponseModel
@@ -78,7 +67,7 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         };
     }
 
-    public async Task<LoginResponseModel> Refresh(string refreshToken, CancellationToken cancellationToken = default)
+    public async Task<LoginResponseModel> Refresh(string refreshToken, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
 
@@ -100,31 +89,36 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         };
     }
 
-    public async Task ResetPassword(ResetPasswordModel resetPassword, CancellationToken cancellationToken = default)
+    public async Task<CreateResultModel> ResetPassword(ResetPasswordModel resetPassword,
+        CancellationToken cancellationToken)
     {
-        Validate(resetPassword);
-
-        var users = await Repository.Get(cancellationToken);
-        var oldUser = users.SingleOrDefault(x => x.Email == resetPassword.Email);
-
-        if (oldUser == null)
+        var employee = await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel
         {
-            throw new NotFoundException($"User with email {resetPassword.Email} not found.");
-        }
+            Email = resetPassword.Email
+        }, cancellationToken);
 
-        if (!_passwordHasher.Verify(resetPassword.OldPassword, oldUser.Password))
+        if (!_passwordHasher.Verify(resetPassword.OldPassword, employee.Password))
         {
             throw new PasswordMismatchException("Passwords do not match.");
         }
 
-        oldUser.Password = _passwordHasher.Hash(resetPassword.NewPassword);
-        oldUser.UpdatedAt = DateTime.UtcNow;
+        employee.Password = _passwordHasher.Hash(resetPassword.NewPassword);
 
-        await Repository.Update(oldUser, cancellationToken);
+        return await _employeesClient.Update(new EmployeeUpdateRequestModel
+        {
+            Id = employee.Id,
+            Name = employee.Name,
+            Surname = employee.Surname,
+            Patronymic = employee.Patronymic,
+            Email = employee.Email,
+            Password = employee.Password,
+            PositionId = employee.PositionId,
+            Role = employee.Role
+        }, cancellationToken);
     }
 
     private async Task<(string UserId, string UserRole)> DecodeRefreshToken(string refreshToken,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
         var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _refreshSecretKey, cancellationToken);
@@ -132,7 +126,6 @@ public class UserAuthenticationManager : DataManagerBase<UserAuthenticationManag
         var userRole = user.FindFirst(ClaimTypes.Role)?.Value;
 
         if (userId != null && userRole != null) return (userId, userRole);
-        _logger.LogError("Invalid token. Missing required claims.");
         throw new Exception("An error occurred while processing your request.");
     }
 }

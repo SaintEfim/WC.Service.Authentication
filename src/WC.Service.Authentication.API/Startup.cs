@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using FluentValidation;
-using WC.Service.Authentication.Data.PostgreSql;
 using WC.Service.Authentication.Domain;
 using StartupBase = WC.Library.Web.Startup.StartupBase;
 
@@ -17,9 +15,5 @@ internal sealed class Startup : StartupBase
     {
         base.ConfigureContainer(builder);
         builder.RegisterModule<AuthenticationDomainModule>();
-        
-        builder.RegisterAssemblyTypes(typeof(Program).Assembly)
-            .AsClosedTypesOf(typeof(IValidator<>))
-            .AsImplementedInterfaces();
     }
 }
