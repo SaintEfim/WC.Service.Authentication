@@ -10,9 +10,6 @@ public sealed class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<UserAuthenticationModel, UserAuthenticationDto>();
-        
-        CreateMap<LoginRequestDto, UserAuthenticationModel>();
         CreateMap<LoginRequestDto, LoginRequestModel>();
         CreateMap<LoginResponseModel, LoginResponseDto>();
         

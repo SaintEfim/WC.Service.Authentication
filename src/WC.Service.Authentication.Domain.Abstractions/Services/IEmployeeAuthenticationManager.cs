@@ -1,10 +1,10 @@
-﻿using WC.Library.Domain.Services;
+﻿using WC.Library.Domain.Models;
 using WC.Service.Authentication.Domain.Models;
 using WC.Service.Authentication.Domain.Models.Login;
 
 namespace WC.Service.Authentication.Domain.Services;
 
-public interface IUserAuthenticationManager : IDataManager<UserAuthenticationModel>
+public interface IEmployeeAuthenticationManager
 {
     Task<LoginResponseModel> Login(
         LoginRequestModel user,
@@ -14,5 +14,6 @@ public interface IUserAuthenticationManager : IDataManager<UserAuthenticationMod
         string refreshToken,
         CancellationToken cancellationToken = default);
 
-    Task ResetPassword(ResetPasswordModel resetPassword, CancellationToken cancellationToken = default);
+    Task<CreateResultModel> ResetPassword(ResetPasswordModel resetPassword,
+        CancellationToken cancellationToken = default);
 }

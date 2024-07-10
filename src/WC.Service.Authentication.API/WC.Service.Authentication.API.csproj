@@ -17,16 +17,15 @@
     
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="13.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.6.2" />
-      <PackageReference Include="WC.Library.Web" Version="1.0.8" />
+      <PackageReference Include="NSwag.Annotations" Version="14.0.8" />
+      <PackageReference Include="WC.Library.Web" Version="1.0.15" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WC.Service.Authentication.Data.PostgreSql\WC.Service.Authentication.Data.PostgreSql.csproj" />
       <ProjectReference Include="..\WC.Service.Authentication.Domain\WC.Service.Authentication.Domain.csproj" />
     </ItemGroup>
 

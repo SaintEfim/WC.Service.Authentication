@@ -9,16 +9,17 @@
     <ItemGroup>
       <PackageReference Include="Autofac" Version="8.0.0" />
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.3" />
       <PackageReference Include="WC.Library.BCryptPasswordHash" Version="1.0.0" />
       <PackageReference Include="WC.Library.BCryptPasswordHash.Abstactions" Version="1.0.0" />
-      <PackageReference Include="WC.Library.Domain" Version="1.0.7" />
-      <PackageReference Include="WC.Library.Shared" Version="1.0.3" />
+      <PackageReference Include="WC.Library.Domain" Version="1.0.16" />
+      <PackageReference Include="WC.Library.Shared" Version="1.0.6" />
+      <PackageReference Include="WC.Service.Employees.gRPC.Client" Version="1.0.3" />
+      <PackageReference Include="WC.Service.Employees.gRPC.Client.Abstractions" Version="1.0.4" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WC.Service.Authentication.Data.PostgreSql\WC.Service.Authentication.Data.PostgreSql.csproj" />
       <ProjectReference Include="..\WC.Service.Authentication.Domain.Abstractions\WC.Service.Authentication.Domain.Abstractions.csproj" />
     </ItemGroup>
 
