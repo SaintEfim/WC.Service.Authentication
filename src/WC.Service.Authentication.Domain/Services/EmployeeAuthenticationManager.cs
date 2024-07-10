@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
+using WC.Library.Domain.Validators;
 using WC.Library.Shared.Constants;
 using WC.Service.Authentication.Domain.Exceptions;
 using WC.Service.Authentication.Domain.Helpers;
@@ -41,6 +42,8 @@ public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployee
     public async Task<LoginResponseModel> Login(LoginRequestModel loginRequest,
         CancellationToken cancellationToken)
     {
+        Validate<LoginRequestModel, IDomainCreateValidator>(loginRequest, cancellationToken);
+
         var employee = await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel
         {
             Email = loginRequest.Email
@@ -92,6 +95,8 @@ public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployee
     public async Task<CreateResultModel> ResetPassword(ResetPasswordModel resetPassword,
         CancellationToken cancellationToken)
     {
+        Validate<ResetPasswordModel, IDomainCreateValidator>(resetPassword, cancellationToken);
+
         var employee = await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel
         {
             Email = resetPassword.Email
