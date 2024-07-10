@@ -39,7 +39,7 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     [SwaggerResponse(Status201Created, typeof(LoginResponseDto))]
     [SwaggerResponse(Status401Unauthorized, typeof(ErrorDto))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
-    public async Task<ActionResult<LoginResponseDto>> LoginEmployee(LoginRequestDto loginRequest,
+    public async Task<ActionResult<LoginResponseDto>> LoginEmployee([FromBody] LoginRequestDto loginRequest,
         CancellationToken cancellationToken = default)
     {
         var createResult = await _manager.Login(Mapper.Map<LoginRequestModel>(loginRequest), cancellationToken);
@@ -71,7 +71,7 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     [OpenApiOperation(nameof(ResetPassword))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
-    public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPassword,
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword,
         CancellationToken cancellationToken = default)
     {
         return Ok(await _manager.ResetPassword(Mapper.Map<ResetPasswordModel>(resetPassword), cancellationToken));
