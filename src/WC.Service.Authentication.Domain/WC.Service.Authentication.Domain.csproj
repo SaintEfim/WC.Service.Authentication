@@ -14,6 +14,7 @@
       <PackageReference Include="WC.Library.BCryptPasswordHash" Version="1.0.0" />
       <PackageReference Include="WC.Library.BCryptPasswordHash.Abstactions" Version="1.0.0" />
       <PackageReference Include="WC.Library.Domain" Version="1.0.16" />
+      <PackageReference Include="WC.Library.Employee.Shared" Version="1.0.4" />
       <PackageReference Include="WC.Library.Shared" Version="1.0.6" />
       <PackageReference Include="WC.Service.Employees.gRPC.Client" Version="1.0.3" />
       <PackageReference Include="WC.Service.Employees.gRPC.Client.Abstractions" Version="1.0.4" />
