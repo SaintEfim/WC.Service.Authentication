@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="logs\" />
+        <Folder Include="obj\Debug\net8.0\Protos\" />
+        <Protobuf Include="Protos\greet_authentication.proto" GrpcServices="Server"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.27.2" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
+        <PackageReference Include="WC.Library.Web" Version="1.0.18" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\WC.Service.Authentication.Domain\WC.Service.Authentication.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

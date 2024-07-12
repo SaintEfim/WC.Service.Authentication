@@ -19,14 +19,17 @@ namespace WC.Service.Authentication.API.Controllers;
 public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthenticationController>
 {
     private readonly IEmployeeAuthenticationManager _manager;
+    private readonly IEmployeeAuthenticationProvider _provider;
 
     /// <inheritdoc/>
     public EmployeeAuthenticationController(
         IMapper mapper,
-        ILogger<EmployeeAuthenticationController> logger, IEmployeeAuthenticationManager manager)
+        ILogger<EmployeeAuthenticationController> logger, IEmployeeAuthenticationManager manager,
+        IEmployeeAuthenticationProvider provider)
         : base(mapper, logger)
     {
         _manager = manager;
+        _provider = provider;
     }
 
     /// <summary>
@@ -42,7 +45,7 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     public async Task<ActionResult<LoginResponseDto>> LoginEmployee([FromBody] LoginRequestDto loginRequest,
         CancellationToken cancellationToken = default)
     {
-        var createResult = await _manager.Login(Mapper.Map<LoginRequestModel>(loginRequest), cancellationToken);
+        var createResult = await _provider.Login(Mapper.Map<LoginRequestModel>(loginRequest), cancellationToken);
 
         return Ok(Mapper.Map<LoginResponseDto>(createResult));
     }
@@ -58,7 +61,7 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     public async Task<ActionResult<LoginResponseDto>> RefreshToken(string refreshToken,
         CancellationToken cancellationToken = default)
     {
-        var res = await _manager.Refresh(refreshToken, cancellationToken);
+        var res = await _provider.Refresh(refreshToken, cancellationToken);
         return Ok(Mapper.Map<LoginResponseDto>(res));
     }
 

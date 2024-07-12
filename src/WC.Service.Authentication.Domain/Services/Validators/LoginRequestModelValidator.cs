@@ -5,7 +5,7 @@ using WC.Service.Authentication.Domain.Models.Login;
 
 namespace WC.Service.Authentication.Domain.Services.Validators;
 
-public class LoginRequestModelValidator : AbstractValidator<LoginRequestModel>, IDomainCreateValidator
+public class LoginRequestModelValidator : AbstractValidator<LoginRequestModel>, IDomainCustomValidator
 {
     public LoginRequestModelValidator()
     {
@@ -17,4 +17,6 @@ public class LoginRequestModelValidator : AbstractValidator<LoginRequestModel>, 
             .NotNull()
             .SetValidator(new PasswordValidator(nameof(LoginRequestModel.Password)));
     }
+
+    public string ActionName => nameof(IEmployeeAuthenticationProvider.Login);
 }
