@@ -22,11 +22,17 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="NSwag.Annotations" Version="14.0.8" />
-      <PackageReference Include="WC.Library.Web" Version="1.0.15" />
+      <PackageReference Include="WC.Library.Web" Version="1.0.18" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\WC.Service.Authentication.Domain\WC.Service.Authentication.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="WC.Service.Authentication.Domain">
+        <HintPath>..\WC.Service.Authentication.Domain\bin\Debug\net8.0\WC.Service.Authentication.Domain.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

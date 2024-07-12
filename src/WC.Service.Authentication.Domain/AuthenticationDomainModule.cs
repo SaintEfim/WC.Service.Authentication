@@ -17,6 +17,10 @@ public class AuthenticationDomainModule : Module
         builder.RegisterType<EmployeeAuthenticationManager>()
             .As<IEmployeeAuthenticationManager>()
             .InstancePerLifetimeScope();
+        
+        builder.RegisterType<EmployeeAuthenticationProvider>()
+            .As<IEmployeeAuthenticationProvider>()
+            .InstancePerLifetimeScope();
 
         builder.RegisterType<EmployeesClientConfiguration>()
             .As<IEmployeesClientConfiguration>()
