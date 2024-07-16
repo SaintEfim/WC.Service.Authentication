@@ -3,10 +3,11 @@ using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
 using WC.Library.Domain.Validators;
-using WC.Service.Authentication.Domain.Exceptions;
+using WC.Library.Employee.Shared.Exceptions;
 using WC.Service.Authentication.Domain.Models;
 using WC.Service.Employees.gRPC.Client.Clients;
-using WC.Service.Employees.gRPC.Client.Models.Employee.Request;
+using WC.Service.Employees.gRPC.Client.Models.Employee;
+using WC.Service.Employees.gRPC.Client.Models.Employee.GetOneByEmailEmployee;
 
 namespace WC.Service.Authentication.Domain.Services;
 
@@ -22,7 +23,7 @@ public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployee
         _employeesClient = employeesClient;
     }
 
-    public async Task<CreateResultModel> ResetPassword(ResetPasswordModel resetPassword,
+    public async Task ResetPassword(ResetPasswordModel resetPassword,
         CancellationToken cancellationToken)
     {
         Validate<ResetPasswordModel, IDomainUpdateValidator>(resetPassword, cancellationToken);
@@ -39,7 +40,7 @@ public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployee
 
         employee.Password = _passwordHasher.Hash(resetPassword.NewPassword);
 
-        return await _employeesClient.Update(new EmployeeUpdateRequestModel
+        await _employeesClient.Update(new EmployeeUpdateRequestModel
         {
             Id = employee.Id,
             Name = employee.Name,

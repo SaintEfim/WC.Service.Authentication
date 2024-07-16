@@ -77,6 +77,7 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword,
         CancellationToken cancellationToken = default)
     {
-        return Ok(await _manager.ResetPassword(Mapper.Map<ResetPasswordModel>(resetPassword), cancellationToken));
+        await _manager.ResetPassword(Mapper.Map<ResetPasswordModel>(resetPassword), cancellationToken);
+        return Ok();
     }
 }

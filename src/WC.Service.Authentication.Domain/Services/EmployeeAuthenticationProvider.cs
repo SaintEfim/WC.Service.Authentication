@@ -4,12 +4,11 @@ using Microsoft.Extensions.Configuration;
 using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
-using WC.Library.Shared.Constants;
-using WC.Service.Authentication.Domain.Exceptions;
+using WC.Library.Employee.Shared.Exceptions;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models.Login;
 using WC.Service.Employees.gRPC.Client.Clients;
-using WC.Service.Employees.gRPC.Client.Models.Employee.Request;
+using WC.Service.Employees.gRPC.Client.Models.Employee.GetOneByEmailEmployee;
 
 namespace WC.Service.Authentication.Domain.Services;
 
@@ -65,7 +64,7 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
 
         return new LoginResponseModel
         {
-            TokenType = BearerTokenConstants.TokenType,
+            TokenType = "Bearer",
             AccessToken = accessToken,
             ExpiresIn = (int)TimeSpan.Parse(_accessHours).TotalSeconds,
             RefreshToken = refreshToken
@@ -87,7 +86,7 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
 
         return new LoginResponseModel
         {
-            TokenType = BearerTokenConstants.TokenType,
+            TokenType = "Bearer",
             AccessToken = newAccessToken,
             ExpiresIn = (int)TimeSpan.Parse(_accessHours).TotalSeconds,
             RefreshToken = newRefreshToken
