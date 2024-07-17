@@ -24,7 +24,7 @@ public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployee
     }
 
     public async Task ResetPassword(ResetPasswordModel resetPassword,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         Validate<ResetPasswordModel, IDomainUpdateValidator>(resetPassword, cancellationToken);
 

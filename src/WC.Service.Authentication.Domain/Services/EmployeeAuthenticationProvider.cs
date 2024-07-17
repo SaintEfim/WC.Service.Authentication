@@ -14,12 +14,12 @@ namespace WC.Service.Authentication.Domain.Services;
 
 public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmployeeAuthenticationProvider
 {
-    private readonly string _accessHours;
-    private readonly string _accessSecretKey;
     private readonly IGreeterEmployeesClient _employeesClient;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IBCryptPasswordHasher _passwordHasher;
+    private readonly string _accessHours;
     private readonly string _refreshHours;
+    private readonly string _accessSecretKey;
     private readonly string _refreshSecretKey;
 
     public EmployeeAuthenticationProvider(IEnumerable<IValidator> validators,
@@ -37,7 +37,7 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
     }
 
     public async Task<LoginResponseModel> Login(LoginRequestModel loginRequest,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         Validate(new LoginRequestModel
         {
@@ -69,7 +69,7 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
         };
     }
 
-    public async Task<LoginResponseModel> Refresh(string refreshToken, CancellationToken cancellationToken)
+    public async Task<LoginResponseModel> Refresh(string refreshToken, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
 
@@ -92,7 +92,7 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
     }
 
     private async Task<(string UserId, string UserRole)> DecodeRefreshToken(string refreshToken,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
         var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _refreshSecretKey, cancellationToken);
