@@ -14,7 +14,7 @@ public class GreeterAuthenticationClient : IGreeterAuthenticationClient
     }
 
     public async Task<LoginResponseModel> GetLoginResponse(LoginRequestModel request,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var loginResponse = await _client.GetLoginResponseAsync(new LoginRequest
         {

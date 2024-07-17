@@ -19,7 +19,7 @@ public class GreeterAuthenticationService : GreeterAuthentication.GreeterAuthent
         {
             Email = request.Email,
             Password = request.Password
-        });
+        }, context.CancellationToken);
 
         return new LoginResponse
         {
