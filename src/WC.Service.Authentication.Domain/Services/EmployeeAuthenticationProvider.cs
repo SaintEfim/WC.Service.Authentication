@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using FluentValidation;
-using Microsoft.Extensions.Configuration;
 using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
@@ -14,26 +13,19 @@ namespace WC.Service.Authentication.Domain.Services;
 
 public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmployeeAuthenticationProvider
 {
+    private readonly AuthenticationSettings _authenticationSettings;
     private readonly IGreeterEmployeesClient _employeesClient;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IBCryptPasswordHasher _passwordHasher;
-    private readonly string _accessHours;
-    private readonly string _refreshHours;
-    private readonly string _accessSecretKey;
-    private readonly string _refreshSecretKey;
 
     public EmployeeAuthenticationProvider(IEnumerable<IValidator> validators,
-        IConfiguration config,
         IJwtTokenGenerator jwtTokenGenerator, IBCryptPasswordHasher passwordHasher,
-        IGreeterEmployeesClient employeesClient) : base(validators)
+        IGreeterEmployeesClient employeesClient, AuthenticationSettings authenticationSettings) : base(validators)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
         _passwordHasher = passwordHasher;
         _employeesClient = employeesClient;
-        _accessHours = config.GetValue<string>("HoursSettings:AccessHours")!;
-        _refreshHours = config.GetValue<string>("HoursSettings:RefreshHours")!;
-        _accessSecretKey = config.GetValue<string>("ApiSettings:AccessSecret")!;
-        _refreshSecretKey = config.GetValue<string>("ApiSettings:RefreshSecret")!;
+        _authenticationSettings = authenticationSettings;
     }
 
     public async Task<LoginResponseModel> Login(LoginRequestModel loginRequest,
@@ -54,17 +46,19 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
             throw new AuthenticationFailedException("Invalid password.");
 
         var accessToken = await
-            _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role, _accessSecretKey,
-                TimeSpan.Parse(_accessHours), cancellationToken);
+            _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role,
+                _authenticationSettings.AccessSecretKey,
+                TimeSpan.Parse(_authenticationSettings.AccessHours), cancellationToken);
         var refreshToken = await
-            _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role, _refreshSecretKey,
-                TimeSpan.Parse(_refreshHours), cancellationToken);
+            _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role,
+                _authenticationSettings.RefreshSecretKey,
+                TimeSpan.Parse(_authenticationSettings.RefreshHours), cancellationToken);
 
         return new LoginResponseModel
         {
             TokenType = "Bearer",
             AccessToken = accessToken,
-            ExpiresIn = (int)TimeSpan.Parse(_accessHours).TotalSeconds,
+            ExpiresIn = (int)TimeSpan.Parse(_authenticationSettings.AccessHours).TotalSeconds,
             RefreshToken = refreshToken
         };
     }
@@ -76,17 +70,17 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
         var (userId, userRole) = await DecodeRefreshToken(refreshToken, cancellationToken);
 
         var newAccessToken = await
-            _jwtTokenGenerator.GenerateToken(userId, userRole, _accessSecretKey,
-                TimeSpan.Parse(_accessHours), cancellationToken);
+            _jwtTokenGenerator.GenerateToken(userId, userRole, _authenticationSettings.AccessSecretKey,
+                TimeSpan.Parse(_authenticationSettings.AccessHours), cancellationToken);
         var newRefreshToken = await
-            _jwtTokenGenerator.GenerateToken(userId, userRole, _refreshSecretKey,
-                TimeSpan.Parse(_refreshHours), cancellationToken);
+            _jwtTokenGenerator.GenerateToken(userId, userRole, _authenticationSettings.RefreshSecretKey,
+                TimeSpan.Parse(_authenticationSettings.RefreshHours), cancellationToken);
 
         return new LoginResponseModel
         {
             TokenType = "Bearer",
             AccessToken = newAccessToken,
-            ExpiresIn = (int)TimeSpan.Parse(_accessHours).TotalSeconds,
+            ExpiresIn = (int)TimeSpan.Parse(_authenticationSettings.AccessHours).TotalSeconds,
             RefreshToken = newRefreshToken
         };
     }
@@ -95,7 +89,8 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
-        var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _refreshSecretKey, cancellationToken);
+        var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _authenticationSettings.RefreshSecretKey,
+            cancellationToken);
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var userRole = user.FindFirst(ClaimTypes.Role)?.Value;
 

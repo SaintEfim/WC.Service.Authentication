@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using WC.Library.BCryptPasswordHash;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Services;
@@ -13,6 +14,12 @@ public class AuthenticationDomainModule : Module
         ContainerBuilder builder)
     {
         builder.RegisterModule<EmployeeClientModule>();
+
+        builder.Register(c =>
+        {
+            var config = c.Resolve<IConfiguration>();
+            return new AuthenticationSettings(config);
+        }).SingleInstance();
 
         builder.RegisterType<EmployeeAuthenticationManager>()
             .As<IEmployeeAuthenticationManager>()
