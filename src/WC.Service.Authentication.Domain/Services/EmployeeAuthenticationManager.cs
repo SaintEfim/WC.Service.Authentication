@@ -13,8 +13,8 @@ namespace WC.Service.Authentication.Domain.Services;
 
 public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployeeAuthenticationManager
 {
-    private readonly IBCryptPasswordHasher _passwordHasher;
     private readonly IGreeterEmployeesClient _employeesClient;
+    private readonly IBCryptPasswordHasher _passwordHasher;
 
     public EmployeeAuthenticationManager(IEnumerable<IValidator> validators, IBCryptPasswordHasher passwordHasher,
         IGreeterEmployeesClient employeesClient) : base(validators)
@@ -34,9 +34,7 @@ public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployee
         }, cancellationToken);
 
         if (!_passwordHasher.Verify(resetPassword.OldPassword, employee.Password))
-        {
             throw new PasswordMismatchException("Passwords do not match.");
-        }
 
         employee.Password = _passwordHasher.Hash(resetPassword.NewPassword);
 

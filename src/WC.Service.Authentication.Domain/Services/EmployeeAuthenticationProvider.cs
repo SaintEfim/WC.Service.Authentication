@@ -14,12 +14,12 @@ namespace WC.Service.Authentication.Domain.Services;
 
 public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmployeeAuthenticationProvider
 {
+    private readonly string _accessHours;
+    private readonly string _accessSecretKey;
+    private readonly IGreeterEmployeesClient _employeesClient;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IBCryptPasswordHasher _passwordHasher;
-    private readonly IGreeterEmployeesClient _employeesClient;
-    private readonly string _accessHours;
     private readonly string _refreshHours;
-    private readonly string _accessSecretKey;
     private readonly string _refreshSecretKey;
 
     public EmployeeAuthenticationProvider(IEnumerable<IValidator> validators,
@@ -51,9 +51,7 @@ public class EmployeeAuthenticationProvider : ValidatorBase<ModelBase>, IEmploye
         }, cancellationToken);
 
         if (!_passwordHasher.Verify(loginRequest.Password, employee.Password))
-        {
             throw new AuthenticationFailedException("Invalid password.");
-        }
 
         var accessToken = await
             _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role, _accessSecretKey,

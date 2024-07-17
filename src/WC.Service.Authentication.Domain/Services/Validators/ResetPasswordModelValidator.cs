@@ -19,7 +19,7 @@ public class ResetPasswordModelValidator : AbstractValidator<ResetPasswordModel>
 
         RuleFor(x => x.NewPassword)
             .NotEqual(x => x.OldPassword);
-        
+
         RuleFor(x => x.NewPassword)
             .NotNull()
             .SetValidator(new PasswordValidator(nameof(ResetPasswordModel.NewPassword)))

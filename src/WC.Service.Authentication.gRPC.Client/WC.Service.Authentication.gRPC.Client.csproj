@@ -18,9 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="8.0.0" />
-      <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
-      <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />
+        <PackageReference Include="Autofac" Version="8.0.0"/>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.63.0"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.63.0"/>
     </ItemGroup>
 
 </Project>

@@ -105,10 +105,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             new(ClaimTypes.NameIdentifier, userId)
         };
 
-        if (!string.IsNullOrEmpty(role))
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
+        if (!string.IsNullOrEmpty(role)) claims.Add(new Claim(ClaimTypes.Role, role));
 
         return Task.FromResult(claims);
     }

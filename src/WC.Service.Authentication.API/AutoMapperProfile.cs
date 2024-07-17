@@ -12,7 +12,7 @@ public sealed class AutoMapperProfile : Profile
     public AutoMapperProfile()
     {
         CreateMap<LoginRequestDto, LoginRequestModel>();
-        
+
         CreateMap<LoginResponseModel, LoginResponseDto>();
 
         CreateMap<ResetPasswordDto, ResetPasswordModel>();
