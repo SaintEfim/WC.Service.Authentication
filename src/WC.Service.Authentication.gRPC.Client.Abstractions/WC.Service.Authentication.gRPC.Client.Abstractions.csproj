@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <RootNamespace>WC.Service.Authentication.gRPC.Client</RootNamespace>
-        <PackageId>WC.Service.Authentication.gRPC.Client.Abstractions</PackageId>
-        <Version>1.0.0</Version>
-        <Authors>SaintEfim</Authors>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>WC.Service.Authentication.gRPC.Client</RootNamespace>
+    <PackageId>WC.Service.Authentication.gRPC.Client.Abstractions</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>SaintEfim</Authors>
+  </PropertyGroup>
 
 </Project>

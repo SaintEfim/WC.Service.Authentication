@@ -7,7 +7,8 @@ public class EmployeesClientConfiguration : IEmployeesClientConfiguration
 {
     private readonly Lazy<string> _baseUrl;
 
-    public EmployeesClientConfiguration(IConfiguration config)
+    public EmployeesClientConfiguration(
+        IConfiguration config)
     {
         _baseUrl = new Lazy<string>(() => config.GetValue<string>("EmployeeService:Url") ??
                                           throw new InvalidOperationException(

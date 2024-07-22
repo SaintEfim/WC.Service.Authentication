@@ -24,7 +24,8 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     /// <inheritdoc/>
     public EmployeeAuthenticationController(
         IMapper mapper,
-        ILogger<EmployeeAuthenticationController> logger, IEmployeeAuthenticationManager manager,
+        ILogger<EmployeeAuthenticationController> logger,
+        IEmployeeAuthenticationManager manager,
         IEmployeeAuthenticationProvider provider)
         : base(mapper, logger)
     {
@@ -42,7 +43,8 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     [SwaggerResponse(Status201Created, typeof(LoginResponseDto))]
     [SwaggerResponse(Status401Unauthorized, typeof(ErrorDto))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
-    public async Task<ActionResult<LoginResponseDto>> LoginEmployee([FromBody] LoginRequestDto loginRequest,
+    public async Task<ActionResult<LoginResponseDto>> LoginEmployee(
+        [FromBody] LoginRequestDto loginRequest,
         CancellationToken cancellationToken = default)
     {
         var createResult = await _provider.Login(Mapper.Map<LoginRequestModel>(loginRequest), cancellationToken);
@@ -58,7 +60,8 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     [HttpPost("refresh")]
     [OpenApiOperation(nameof(RefreshToken))]
     [SwaggerResponse(Status200OK, typeof(LoginResponseDto))]
-    public async Task<ActionResult<LoginResponseDto>> RefreshToken(string refreshToken,
+    public async Task<ActionResult<LoginResponseDto>> RefreshToken(
+        string refreshToken,
         CancellationToken cancellationToken = default)
     {
         var res = await _provider.Refresh(refreshToken, cancellationToken);
@@ -74,7 +77,8 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     [OpenApiOperation(nameof(ResetPassword))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
-    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword,
+    public async Task<IActionResult> ResetPassword(
+        [FromBody] ResetPasswordDto resetPassword,
         CancellationToken cancellationToken = default)
     {
         await _manager.ResetPassword(Mapper.Map<ResetPasswordModel>(resetPassword), cancellationToken);

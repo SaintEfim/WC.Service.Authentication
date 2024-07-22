@@ -16,10 +16,11 @@ public class AuthenticationDomainModule : Module
         builder.RegisterModule<EmployeeClientModule>();
 
         builder.Register(c =>
-        {
-            var config = c.Resolve<IConfiguration>();
-            return new AuthenticationSettings(config);
-        }).SingleInstance();
+            {
+                var config = c.Resolve<IConfiguration>();
+                return new AuthenticationSettings(config);
+            })
+            .SingleInstance();
 
         builder.RegisterType<EmployeeAuthenticationManager>()
             .As<IEmployeeAuthenticationManager>()

@@ -10,12 +10,17 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 {
     private readonly ILogger<JwtTokenGenerator> _logger;
 
-    public JwtTokenGenerator(ILogger<JwtTokenGenerator> logger)
+    public JwtTokenGenerator(
+        ILogger<JwtTokenGenerator> logger)
     {
         _logger = logger;
     }
 
-    public async Task<string> GenerateToken(string userId, string? role, string secretKey, TimeSpan expiresIn,
+    public async Task<string> GenerateToken(
+        string userId,
+        string? role,
+        string secretKey,
+        TimeSpan expiresIn,
         CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(secretKey))
@@ -25,7 +30,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = await GenerateKey(secretKey, cancellationToken).ConfigureAwait(false);
+        var key = await GenerateKey(secretKey, cancellationToken)
+            .ConfigureAwait(false);
 
         if (key == null)
         {
@@ -33,7 +39,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             throw new Exception("An error occurred while processing your request.");
         }
 
-        var claims = await GenerateClaims(userId, role, cancellationToken).ConfigureAwait(false);
+        var claims = await GenerateClaims(userId, role, cancellationToken)
+            .ConfigureAwait(false);
 
         if (claims == null)
         {
@@ -54,7 +61,9 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         return tokenHandler.WriteToken(token);
     }
 
-    public async Task<ClaimsPrincipal> DecodeToken(string token, string secretKey,
+    public async Task<ClaimsPrincipal> DecodeToken(
+        string token,
+        string secretKey,
         CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(secretKey))
@@ -86,7 +95,9 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         return principal;
     }
 
-    private static Task<byte[]> GenerateKey(string secretKey, CancellationToken cancellationToken = default)
+    private static Task<byte[]> GenerateKey(
+        string secretKey,
+        CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(secretKey);
         cancellationToken.ThrowIfCancellationRequested();
@@ -94,18 +105,20 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         return Task.FromResult(Encoding.UTF8.GetBytes(secretKey));
     }
 
-    private static Task<List<Claim>> GenerateClaims(string userId, string? role,
+    private static Task<List<Claim>> GenerateClaims(
+        string userId,
+        string? role,
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(userId);
         cancellationToken.ThrowIfCancellationRequested();
 
-        var claims = new List<Claim>
-        {
-            new(ClaimTypes.NameIdentifier, userId)
-        };
+        var claims = new List<Claim> { new(ClaimTypes.NameIdentifier, userId) };
 
-        if (!string.IsNullOrEmpty(role)) claims.Add(new Claim(ClaimTypes.Role, role));
+        if (!string.IsNullOrEmpty(role))
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
 
         return Task.FromResult(claims);
     }

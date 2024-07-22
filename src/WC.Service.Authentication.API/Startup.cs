@@ -6,7 +6,9 @@ namespace WC.Service.Authentication.API;
 
 internal sealed class Startup : StartupBase
 {
-    public Startup(WebApplicationBuilder builder) : base(builder)
+    public Startup(
+        WebApplicationBuilder builder)
+        : base(builder)
     {
     }
 

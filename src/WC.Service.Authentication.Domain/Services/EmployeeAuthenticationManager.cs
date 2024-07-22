@@ -11,30 +11,37 @@ using WC.Service.Employees.gRPC.Client.Models.Employee.GetOneByEmailEmployee;
 
 namespace WC.Service.Authentication.Domain.Services;
 
-public class EmployeeAuthenticationManager : ValidatorBase<ModelBase>, IEmployeeAuthenticationManager
+public class EmployeeAuthenticationManager
+    : ValidatorBase<ModelBase>,
+        IEmployeeAuthenticationManager
 {
     private readonly IGreeterEmployeesClient _employeesClient;
     private readonly IBCryptPasswordHasher _passwordHasher;
 
-    public EmployeeAuthenticationManager(IEnumerable<IValidator> validators, IBCryptPasswordHasher passwordHasher,
-        IGreeterEmployeesClient employeesClient) : base(validators)
+    public EmployeeAuthenticationManager(
+        IEnumerable<IValidator> validators,
+        IBCryptPasswordHasher passwordHasher,
+        IGreeterEmployeesClient employeesClient)
+        : base(validators)
     {
         _passwordHasher = passwordHasher;
         _employeesClient = employeesClient;
     }
 
-    public async Task ResetPassword(ResetPasswordModel resetPassword,
+    public async Task ResetPassword(
+        ResetPasswordModel resetPassword,
         CancellationToken cancellationToken = default)
     {
         Validate<ResetPasswordModel, IDomainUpdateValidator>(resetPassword, cancellationToken);
 
-        var employee = await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel
-        {
-            Email = resetPassword.Email
-        }, cancellationToken);
+        var employee =
+            await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel { Email = resetPassword.Email },
+                cancellationToken);
 
         if (!_passwordHasher.Verify(resetPassword.OldPassword, employee.Password))
+        {
             throw new PasswordMismatchException("Passwords do not match.");
+        }
 
         employee.Password = _passwordHasher.Hash(resetPassword.NewPassword);
 

@@ -7,13 +7,15 @@ public class GreeterAuthenticationClient : IGreeterAuthenticationClient
 {
     private readonly GreeterAuthentication.GreeterAuthenticationClient _client;
 
-    public GreeterAuthenticationClient(IAuthenticationClientConfiguration configuration)
+    public GreeterAuthenticationClient(
+        IAuthenticationClientConfiguration configuration)
     {
         var channel = GrpcChannel.ForAddress(configuration.GetBaseUrl());
         _client = new GreeterAuthentication.GreeterAuthenticationClient(channel);
     }
 
-    public async Task<LoginResponseModel> GetLoginResponse(LoginRequestModel request,
+    public async Task<LoginResponseModel> GetLoginResponse(
+        LoginRequestModel request,
         CancellationToken cancellationToken = default)
     {
         var loginResponse = await _client.GetLoginResponseAsync(new LoginRequest

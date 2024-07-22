@@ -5,7 +5,9 @@ using WC.Service.Authentication.Domain.Models.Login;
 
 namespace WC.Service.Authentication.Domain.Services.Validators;
 
-public class LoginRequestModelValidator : AbstractValidator<LoginRequestModel>, IDomainCustomValidator
+public class LoginRequestModelValidator
+    : AbstractValidator<LoginRequestModel>,
+        IDomainCustomValidator
 {
     public LoginRequestModelValidator()
     {

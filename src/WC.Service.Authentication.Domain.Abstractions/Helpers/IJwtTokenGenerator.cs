@@ -4,9 +4,15 @@ namespace WC.Service.Authentication.Domain.Helpers;
 
 public interface IJwtTokenGenerator
 {
-    Task<string> GenerateToken(string userId, string? role, string secretKey, TimeSpan expiresIn,
+    Task<string> GenerateToken(
+        string userId,
+        string? role,
+        string secretKey,
+        TimeSpan expiresIn,
         CancellationToken cancellationToken = default);
 
-    Task<ClaimsPrincipal> DecodeToken(string token, string secretKey,
+    Task<ClaimsPrincipal> DecodeToken(
+        string token,
+        string secretKey,
         CancellationToken cancellationToken = default);
 }

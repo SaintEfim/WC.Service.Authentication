@@ -4,9 +4,11 @@ namespace WC.Service.Authentication.Domain.Services;
 
 public class AuthenticationSettings
 {
-    public AuthenticationSettings(IConfiguration config)
+    public AuthenticationSettings(
+        IConfiguration config)
     {
-        config.GetSection("AuthenticationSettings").Bind(this);
+        config.GetSection("AuthenticationSettings")
+            .Bind(this);
     }
 
     public string AccessHours { get; set; } = string.Empty;

@@ -8,12 +8,15 @@ public class GreeterAuthenticationService : GreeterAuthentication.GreeterAuthent
 {
     private readonly IEmployeeAuthenticationProvider _provider;
 
-    public GreeterAuthenticationService(IEmployeeAuthenticationProvider provider)
+    public GreeterAuthenticationService(
+        IEmployeeAuthenticationProvider provider)
     {
         _provider = provider;
     }
 
-    public override async Task<LoginResponse> GetLoginResponse(LoginRequest request, ServerCallContext context)
+    public override async Task<LoginResponse> GetLoginResponse(
+        LoginRequest request,
+        ServerCallContext context)
     {
         var loginResponse = await _provider.Login(new LoginRequestModel
         {

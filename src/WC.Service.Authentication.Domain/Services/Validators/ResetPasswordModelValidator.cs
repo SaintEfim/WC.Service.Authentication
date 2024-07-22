@@ -5,7 +5,9 @@ using WC.Service.Authentication.Domain.Models;
 
 namespace WC.Service.Authentication.Domain.Services.Validators;
 
-public class ResetPasswordModelValidator : AbstractValidator<ResetPasswordModel>, IDomainUpdateValidator
+public class ResetPasswordModelValidator
+    : AbstractValidator<ResetPasswordModel>,
+        IDomainUpdateValidator
 {
     public ResetPasswordModelValidator()
     {

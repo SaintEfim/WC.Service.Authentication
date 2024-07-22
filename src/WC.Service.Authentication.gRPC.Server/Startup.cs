@@ -7,17 +7,21 @@ namespace WC.Service.Authentication.gRPC.Server;
 
 internal sealed class Startup : StartupGrpcBase
 {
-    public Startup(WebApplicationBuilder builder) : base(builder)
+    public Startup(
+        WebApplicationBuilder builder)
+        : base(builder)
     {
     }
 
-    public override void ConfigureContainer(ContainerBuilder builder)
+    public override void ConfigureContainer(
+        ContainerBuilder builder)
     {
         base.ConfigureContainer(builder);
         builder.RegisterModule<AuthenticationDomainModule>();
     }
 
-    public override void Configure(WebApplication app)
+    public override void Configure(
+        WebApplication app)
     {
         base.Configure(app);
         app.MapGrpcService<GreeterAuthenticationService>();
