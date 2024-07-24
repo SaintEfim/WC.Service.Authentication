@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
 using FluentValidation;
-using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
-using WC.Library.Employee.Shared.Exceptions;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models.Login;
 using WC.Service.Employees.gRPC.Client.Clients;
@@ -18,18 +16,15 @@ public class EmployeeAuthenticationProvider
     private readonly AuthenticationSettings _authenticationSettings;
     private readonly IGreeterEmployeesClient _employeesClient;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
-    private readonly IBCryptPasswordHasher _passwordHasher;
 
     public EmployeeAuthenticationProvider(
         IEnumerable<IValidator> validators,
         IJwtTokenGenerator jwtTokenGenerator,
-        IBCryptPasswordHasher passwordHasher,
         IGreeterEmployeesClient employeesClient,
         AuthenticationSettings authenticationSettings)
         : base(validators)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
-        _passwordHasher = passwordHasher;
         _employeesClient = employeesClient;
         _authenticationSettings = authenticationSettings;
     }
@@ -48,10 +43,10 @@ public class EmployeeAuthenticationProvider
             await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel { Email = loginRequest.Email },
                 cancellationToken);
 
-        if (!_passwordHasher.Verify(loginRequest.Password, employee.Password))
-        {
-            throw new AuthenticationFailedException("Invalid password.");
-        }
+        // if (!_passwordHasher.Verify(loginRequest.Password, employee.Password))
+        // {
+        //     throw new AuthenticationFailedException("Invalid password.");
+        // }
 
         var accessToken = await _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role,
             _authenticationSettings.AccessSecretKey, TimeSpan.Parse(_authenticationSettings.AccessHours),

@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using WC.Library.BCryptPasswordHash;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
 using WC.Library.Domain.Validators;
@@ -16,15 +15,12 @@ public class EmployeeAuthenticationManager
         IEmployeeAuthenticationManager
 {
     private readonly IGreeterEmployeesClient _employeesClient;
-    private readonly IBCryptPasswordHasher _passwordHasher;
 
     public EmployeeAuthenticationManager(
         IEnumerable<IValidator> validators,
-        IBCryptPasswordHasher passwordHasher,
         IGreeterEmployeesClient employeesClient)
         : base(validators)
     {
-        _passwordHasher = passwordHasher;
         _employeesClient = employeesClient;
     }
 
@@ -38,12 +34,12 @@ public class EmployeeAuthenticationManager
             await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel { Email = resetPassword.Email },
                 cancellationToken);
 
-        if (!_passwordHasher.Verify(resetPassword.OldPassword, employee.Password))
-        {
-            throw new PasswordMismatchException("Passwords do not match.");
-        }
-
-        employee.Password = _passwordHasher.Hash(resetPassword.NewPassword);
+        // if (!_passwordHasher.Verify(resetPassword.OldPassword, employee.Password))
+        // {
+        //     throw new PasswordMismatchException("Passwords do not match.");
+        // }
+        //
+        // employee.Password = _passwordHasher.Hash(resetPassword.NewPassword);
 
         await _employeesClient.Update(new EmployeeUpdateRequestModel
         {

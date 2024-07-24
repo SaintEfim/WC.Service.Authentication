@@ -10,8 +10,6 @@
     <PackageReference Include="Autofac" Version="8.0.0"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2"/>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0"/>
-    <PackageReference Include="WC.Library.BCryptPasswordHash" Version="1.0.1"/>
-    <PackageReference Include="WC.Library.BCryptPasswordHash.Abstactions" Version="1.0.1"/>
     <PackageReference Include="WC.Library.Domain" Version="1.0.23"/>
     <PackageReference Include="WC.Library.Employee.Shared" Version="1.0.11"/>
     <PackageReference Include="WC.Library.Shared" Version="1.0.8"/>

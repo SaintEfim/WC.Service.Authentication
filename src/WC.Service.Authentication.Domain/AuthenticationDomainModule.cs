@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
-using WC.Library.BCryptPasswordHash;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Services;
 using WC.Service.Employees.gRPC.Client;
@@ -40,10 +39,6 @@ public class AuthenticationDomainModule : Module
 
         builder.RegisterType<JwtTokenGenerator>()
             .As<IJwtTokenGenerator>()
-            .InstancePerLifetimeScope();
-
-        builder.RegisterType<BCryptPasswordHasher>()
-            .As<IBCryptPasswordHasher>()
             .InstancePerLifetimeScope();
     }
 }
