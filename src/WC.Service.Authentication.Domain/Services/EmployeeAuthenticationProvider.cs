@@ -4,8 +4,8 @@ using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models.Login;
-using WC.Service.Employees.gRPC.Client.Clients;
-using WC.Service.Employees.gRPC.Client.Models.Employee.GetOneByEmailEmployee;
+using WC.Service.PersonalData.gRPC.Client.Clients;
+using WC.Service.PersonalData.gRPC.Client.Models.Verify;
 
 namespace WC.Service.Authentication.Domain.Services;
 
@@ -14,18 +14,18 @@ public class EmployeeAuthenticationProvider
         IEmployeeAuthenticationProvider
 {
     private readonly AuthenticationSettings _authenticationSettings;
-    private readonly IGreeterEmployeesClient _employeesClient;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly IGreeterPersonalDataClient _personalDataClient;
 
     public EmployeeAuthenticationProvider(
         IEnumerable<IValidator> validators,
         IJwtTokenGenerator jwtTokenGenerator,
-        IGreeterEmployeesClient employeesClient,
+        IGreeterPersonalDataClient personalDataClient,
         AuthenticationSettings authenticationSettings)
         : base(validators)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
-        _employeesClient = employeesClient;
+        _personalDataClient = personalDataClient;
         _authenticationSettings = authenticationSettings;
     }
 
@@ -39,21 +39,19 @@ public class EmployeeAuthenticationProvider
             Password = loginRequest.Password
         }, nameof(IEmployeeAuthenticationProvider.Login), cancellationToken);
 
-        var employee =
-            await _employeesClient.GetOneByEmail(new GetOneByEmailEmployeeRequestModel { Email = loginRequest.Email },
-                cancellationToken);
+        var verifyCredentialsResponse = await _personalDataClient.VerifyCredentials(
+            new VerifyCredentialsRequestModel
+            {
+                Email = loginRequest.Email,
+                Password = loginRequest.Password
+            }, cancellationToken);
 
-        // if (!_passwordHasher.Verify(loginRequest.Password, employee.Password))
-        // {
-        //     throw new AuthenticationFailedException("Invalid password.");
-        // }
-
-        var accessToken = await _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role,
-            _authenticationSettings.AccessSecretKey, TimeSpan.Parse(_authenticationSettings.AccessHours),
-            cancellationToken);
-        var refreshToken = await _jwtTokenGenerator.GenerateToken(employee.Id.ToString(), employee.Role,
-            _authenticationSettings.RefreshSecretKey, TimeSpan.Parse(_authenticationSettings.RefreshHours),
-            cancellationToken);
+        var accessToken = await _jwtTokenGenerator.GenerateToken(verifyCredentialsResponse.EmployeeId.ToString(),
+            verifyCredentialsResponse.Role, _authenticationSettings.AccessSecretKey,
+            TimeSpan.Parse(_authenticationSettings.AccessHours), cancellationToken);
+        var refreshToken = await _jwtTokenGenerator.GenerateToken(verifyCredentialsResponse.EmployeeId.ToString(),
+            verifyCredentialsResponse.Role, _authenticationSettings.RefreshSecretKey,
+            TimeSpan.Parse(_authenticationSettings.RefreshHours), cancellationToken);
 
         return new LoginResponseModel
         {

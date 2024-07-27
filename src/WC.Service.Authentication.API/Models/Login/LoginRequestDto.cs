@@ -11,11 +11,11 @@ public class LoginRequestDto
     ///     The email address of the user.
     /// </summary>
     [Required]
-    public string Email { get; set; } = string.Empty;
+    public required string Email { get; set; } = string.Empty;
 
     /// <summary>
     ///     The password of the user.
     /// </summary>
     [Required]
-    public string Password { get; set; } = string.Empty;
+    public required string Password { get; set; } = string.Empty;
 }

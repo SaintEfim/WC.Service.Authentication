@@ -11,17 +11,17 @@ public class ResetPasswordDto
     ///     The email address of the user.
     /// </summary>
     [Required]
-    public string Email { get; set; } = string.Empty;
+    public required string Email { get; set; } = string.Empty;
 
     /// <summary>
     ///     The old password of the user.
     /// </summary>
     [Required]
-    public string OldPassword { get; set; } = string.Empty;
+    public required string OldPassword { get; set; } = string.Empty;
 
     /// <summary>
     ///     The new password of the user.
     /// </summary>
     [Required]
-    public string NewPassword { get; set; } = string.Empty;
+    public required string NewPassword { get; set; } = string.Empty;
 }

@@ -3,7 +3,7 @@ using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Services;
-using WC.Service.Employees.gRPC.Client;
+using WC.Service.PersonalData.gRPC.Client;
 
 namespace WC.Service.Authentication.Domain;
 
@@ -12,7 +12,7 @@ public class AuthenticationDomainModule : Module
     protected override void Load(
         ContainerBuilder builder)
     {
-        builder.RegisterModule<EmployeeClientModule>();
+        builder.RegisterModule<PersonalDataClientModule>();
 
         builder.Register(c =>
             {
@@ -21,16 +21,16 @@ public class AuthenticationDomainModule : Module
             })
             .SingleInstance();
 
+        builder.RegisterType<PersonalDataClientConfiguration>()
+            .As<IPersonalDataClientConfiguration>()
+            .InstancePerLifetimeScope();
+
         builder.RegisterType<EmployeeAuthenticationManager>()
             .As<IEmployeeAuthenticationManager>()
             .InstancePerLifetimeScope();
 
         builder.RegisterType<EmployeeAuthenticationProvider>()
             .As<IEmployeeAuthenticationProvider>()
-            .InstancePerLifetimeScope();
-
-        builder.RegisterType<EmployeesClientConfiguration>()
-            .As<IEmployeesClientConfiguration>()
             .InstancePerLifetimeScope();
 
         builder.RegisterAssemblyTypes(ThisAssembly)
