@@ -5,22 +5,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>WC.Service.Authentication.gRPC.Client</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>SaintEfim</Authors>
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\greet_authentication_client.proto" GrpcServices="Client"/>
+    <Protobuf Include="Protos\greet_authentication_client.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WC.Service.Authentication.gRPC.Client.Abstractions\WC.Service.Authentication.gRPC.Client.Abstractions.csproj"/>
+    <ProjectReference
+      Include="..\WC.Service.Authentication.gRPC.Client.Abstractions\WC.Service.Authentication.gRPC.Client.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="8.0.0"/>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0"/>
-    <PackageReference Include="Grpc.Net.Client" Version="2.65.0"/>
+    <PackageReference Include="Autofac" Version="8.0.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
   </ItemGroup>
 
 </Project>
