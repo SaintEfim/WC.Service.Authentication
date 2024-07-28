@@ -15,7 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.27.2"/>
     <PackageReference Include="Grpc.AspNetCore" Version="2.65.0"/>
-    <PackageReference Include="WC.Library.Web" Version="1.0.25"/>
+    <PackageReference Include="WC.Library.Web" Version="1.0.26" />
   </ItemGroup>
 
   <ItemGroup>
