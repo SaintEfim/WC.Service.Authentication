@@ -37,7 +37,7 @@ public class EmployeeAuthenticationManager
                 new VerifyCredentialsRequestModel
                 {
                     Email = resetPasswordModel.Email,
-                    Password = resetPasswordModel.NewPassword
+                    Password = resetPasswordModel.OldPassword
                 }, cancellationToken);
 
             if (verifyResponse == null)
