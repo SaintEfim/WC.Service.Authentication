@@ -22,7 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NSwag.Annotations" Version="14.1.0"/>
-    <PackageReference Include="WC.Library.Web" Version="1.0.26" />
+    <PackageReference Include="WC.Library.Web" Version="1.0.26"/>
   </ItemGroup>
 
   <ItemGroup>
