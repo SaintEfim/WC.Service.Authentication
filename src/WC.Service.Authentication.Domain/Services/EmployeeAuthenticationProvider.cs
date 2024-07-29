@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Security.Authentication;
+using System.Security.Claims;
 using FluentValidation;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
@@ -39,18 +40,31 @@ public class EmployeeAuthenticationProvider
             Password = loginRequest.Password
         }, nameof(IEmployeeAuthenticationProvider.Login), cancellationToken);
 
-        var verifyCredentialsResponse = await _personalDataClient.VerifyCredentials(
-            new VerifyCredentialsRequestModel
-            {
-                Email = loginRequest.Email,
-                Password = loginRequest.Password
-            }, cancellationToken);
+        VerifyCredentialsResponseModel verifyResponse;
+        try
+        {
+            verifyResponse = await _personalDataClient.VerifyCredentials(
+                new VerifyCredentialsRequestModel
+                {
+                    Email = loginRequest.Email,
+                    Password = loginRequest.Password
+                }, cancellationToken);
 
-        var accessToken = await _jwtTokenGenerator.GenerateToken(verifyCredentialsResponse.EmployeeId.ToString(),
-            verifyCredentialsResponse.Role, _authenticationSettings.AccessSecretKey,
+            if (verifyResponse == null)
+            {
+                throw new AuthenticationException("Invalid email or password.");
+            }
+        }
+        catch (Exception)
+        {
+            throw new AuthenticationException("Invalid email or password.");
+        }
+
+        var accessToken = await _jwtTokenGenerator.GenerateToken(verifyResponse.PersonalDataId.ToString(),
+            verifyResponse.Role, _authenticationSettings.AccessSecretKey,
             TimeSpan.Parse(_authenticationSettings.AccessHours), cancellationToken);
-        var refreshToken = await _jwtTokenGenerator.GenerateToken(verifyCredentialsResponse.EmployeeId.ToString(),
-            verifyCredentialsResponse.Role, _authenticationSettings.RefreshSecretKey,
+        var refreshToken = await _jwtTokenGenerator.GenerateToken(verifyResponse.PersonalDataId.ToString(),
+            verifyResponse.Role, _authenticationSettings.RefreshSecretKey,
             TimeSpan.Parse(_authenticationSettings.RefreshHours), cancellationToken);
 
         return new LoginResponseModel
