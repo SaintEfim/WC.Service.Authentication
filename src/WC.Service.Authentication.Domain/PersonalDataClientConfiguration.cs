@@ -10,7 +10,7 @@ public class PersonalDataClientConfiguration : IPersonalDataClientConfiguration
     public PersonalDataClientConfiguration(
         IConfiguration config)
     {
-        _baseUrl = new Lazy<string>(() => config.GetValue<string>("PersonalDataService:Url") ??
+        _baseUrl = new Lazy<string>(() => config.GetValue<string>("Service:personal-data") ??
                                           throw new InvalidOperationException(
                                               "Personal data REST API service URL must be specified"));
     }
