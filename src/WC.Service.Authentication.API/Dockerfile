@@ -3,9 +3,6 @@ WORKDIR /src
 
 COPY src/WC.Service.Authentication.API/WC.Service.Authentication.API.csproj src/WC.Service.Authentication.API/
 COPY src/WC.Service.Authentication.Domain/WC.Service.Authentication.Domain.csproj src/WC.Service.Authentication.Domain/
-COPY src/WC.Service.Authentication.Data.Abstractions/WC.Service.Authentication.Data.Abstractions.csproj src/WC.Service.Authentication.Data.Abstractions/
-COPY src/WC.Service.Authentication.Data.PostgreSql/WC.Service.Authentication.Data.PostgreSql.csproj src/WC.Service.Authentication.Data.PostgreSql/
-COPY src/WC.Service.Authentication.Data/WC.Service.Authentication.Data.csproj src/WC.Service.Authentication.Data/
 COPY src/WC.Service.Authentication.Domain.Abstractions/WC.Service.Authentication.Domain.Abstractions.csproj src/WC.Service.Authentication.Domain.Abstractions/
 
 RUN dotnet restore src/WC.Service.Authentication.API/WC.Service.Authentication.API.csproj
