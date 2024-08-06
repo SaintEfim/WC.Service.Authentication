@@ -2,7 +2,7 @@
 using WC.Service.Authentication.Domain.Models.Login;
 using WC.Service.Authentication.Domain.Services;
 
-namespace WC.Service.Authentication.gRPC.Server.Services;
+namespace WC.Service.Authentication.API.gRPC.Services;
 
 public class GreeterAuthenticationService : GreeterAuthentication.GreeterAuthenticationBase
 {

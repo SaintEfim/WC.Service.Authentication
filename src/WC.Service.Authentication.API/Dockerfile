@@ -8,7 +8,6 @@ COPY src/WC.Service.Authentication.Domain.Abstractions/WC.Service.Authentication
 RUN dotnet restore src/WC.Service.Authentication.API/WC.Service.Authentication.API.csproj
 
 COPY src/ .
-
 WORKDIR /src/WC.Service.Authentication.API
 RUN dotnet build -c Release -o /app/build
 
@@ -18,4 +17,5 @@ RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "WC.Service.Authentication.API.dll"]

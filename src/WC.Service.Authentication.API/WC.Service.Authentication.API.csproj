@@ -17,12 +17,18 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1"/>
+    <PackageReference Include="Google.Protobuf" Version="3.27.3"/>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0"/>
+    <PackageReference Include="Grpc.Tools" Version="2.65.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NSwag.Annotations" Version="14.1.0"/>
-    <PackageReference Include="WC.Library.Web" Version="1.0.26"/>
+    <PackageReference Include="WC.Library.Web" Version="1.0.27"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +39,10 @@
     <Reference Include="WC.Service.Authentication.Domain">
       <HintPath>..\WC.Service.Authentication.Domain\bin\Debug\net8.0\WC.Service.Authentication.Domain.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="gRPC\Protos\greet_authentication.proto" GrpcServices="Server"/>
   </ItemGroup>
 
 </Project>
