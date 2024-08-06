@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "WC.Service.Authentication.gRPC.Server.Services";
+option csharp_namespace = "WC.Service.Authentication.API.gRPC.Services";
 
 package authentication;
 

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using WC.Service.Authentication.API.gRPC.Services;
 using WC.Service.Authentication.Domain;
 using StartupBase = WC.Library.Web.Startup.StartupBase;
 
@@ -17,5 +18,12 @@ internal sealed class Startup : StartupBase
     {
         base.ConfigureContainer(builder);
         builder.RegisterModule<AuthenticationDomainModule>();
+    }
+
+    public override void Configure(
+        WebApplication app)
+    {
+        base.Configure(app);
+        app.MapGrpcService<GreeterAuthenticationService>();
     }
 }
