@@ -1,6 +1,6 @@
 ﻿namespace WC.Service.Authentication.Domain.Models.Login;
 
-public class LoginRequestModel
+public class EmployeeAuthenticationLoginRequestModel
 {
     public string Email { get; set; } = string.Empty;
 

@@ -1,6 +1,6 @@
 ﻿namespace WC.Service.Authentication.Domain.Models;
 
-public class ResetPasswordModel
+public class EmployeeAuthenticationResetPasswordModel
 {
     public string Email { get; set; } = string.Empty;
 

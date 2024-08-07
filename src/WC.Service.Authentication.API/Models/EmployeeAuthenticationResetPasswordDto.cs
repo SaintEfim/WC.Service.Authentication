@@ -5,7 +5,7 @@ namespace WC.Service.Authentication.API.Models;
 /// <summary>
 ///     Represents the data transfer object for resetting a user's password.
 /// </summary>
-public class ResetPasswordDto
+public class EmployeeAuthenticationResetPasswordDto
 {
     /// <summary>
     ///     The email address of the user.

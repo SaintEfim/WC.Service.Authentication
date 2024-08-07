@@ -30,32 +30,24 @@ public class EmployeeAuthenticationProvider
         _authenticationSettings = authenticationSettings;
     }
 
-    public async Task<LoginResponseModel> Login(
-        LoginRequestModel loginRequest,
+    public async Task<EmployeeAuthenticationLoginResponseModel> Login(
+        EmployeeAuthenticationLoginRequestModel employeeAuthenticationLoginRequest,
         CancellationToken cancellationToken = default)
     {
-        Validate(new LoginRequestModel
+        Validate(new EmployeeAuthenticationLoginRequestModel
         {
-            Email = loginRequest.Email,
-            Password = loginRequest.Password
+            Email = employeeAuthenticationLoginRequest.Email,
+            Password = employeeAuthenticationLoginRequest.Password
         }, nameof(IEmployeeAuthenticationProvider.Login), cancellationToken);
 
-        VerifyCredentialsResponseModel verifyResponse;
-        try
-        {
-            verifyResponse = await _personalDataClient.VerifyCredentials(
-                new VerifyCredentialsRequestModel
-                {
-                    Email = loginRequest.Email,
-                    Password = loginRequest.Password
-                }, cancellationToken);
-
-            if (verifyResponse == null)
+        var verifyResponse = await _personalDataClient.VerifyCredentials(
+            new VerifyCredentialsRequestModel
             {
-                throw new AuthenticationException("Invalid email or password.");
-            }
-        }
-        catch (Exception)
+                Email = employeeAuthenticationLoginRequest.Email,
+                Password = employeeAuthenticationLoginRequest.Password
+            }, cancellationToken);
+
+        if (verifyResponse == null)
         {
             throw new AuthenticationException("Invalid email or password.");
         }
@@ -67,7 +59,7 @@ public class EmployeeAuthenticationProvider
             verifyResponse.Role, _authenticationSettings.RefreshSecretKey,
             TimeSpan.Parse(_authenticationSettings.RefreshHours), cancellationToken);
 
-        return new LoginResponseModel
+        return new EmployeeAuthenticationLoginResponseModel
         {
             TokenType = "Bearer",
             AccessToken = accessToken,
@@ -77,7 +69,7 @@ public class EmployeeAuthenticationProvider
         };
     }
 
-    public async Task<LoginResponseModel> Refresh(
+    public async Task<EmployeeAuthenticationLoginResponseModel> Refresh(
         string refreshToken,
         CancellationToken cancellationToken = default)
     {
@@ -92,7 +84,7 @@ public class EmployeeAuthenticationProvider
             _authenticationSettings.RefreshSecretKey, TimeSpan.Parse(_authenticationSettings.RefreshHours),
             cancellationToken);
 
-        return new LoginResponseModel
+        return new EmployeeAuthenticationLoginResponseModel
         {
             TokenType = "Bearer",
             AccessToken = newAccessToken,
@@ -107,16 +99,16 @@ public class EmployeeAuthenticationProvider
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
-        var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _authenticationSettings.RefreshSecretKey,
+        var employee = await _jwtTokenGenerator.DecodeToken(refreshToken, _authenticationSettings.RefreshSecretKey,
             cancellationToken);
-        var userId = user.FindFirst(ClaimTypes.NameIdentifier)
+        var employeeId = employee.FindFirst(ClaimTypes.NameIdentifier)
             ?.Value;
-        var userRole = user.FindFirst(ClaimTypes.Role)
+        var employeeRole = employee.FindFirst(ClaimTypes.Role)
             ?.Value;
 
-        if (userId != null && userRole != null)
+        if (employeeId != null && employeeRole != null)
         {
-            return (userId, userRole);
+            return (employeeId, employeeRole);
         }
 
         throw new Exception("An error occurred while processing your request.");
