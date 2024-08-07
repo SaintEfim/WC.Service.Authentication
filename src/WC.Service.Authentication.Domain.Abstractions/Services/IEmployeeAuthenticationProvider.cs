@@ -4,11 +4,11 @@ namespace WC.Service.Authentication.Domain.Services;
 
 public interface IEmployeeAuthenticationProvider
 {
-    Task<LoginResponseModel> Login(
-        LoginRequestModel user,
+    Task<EmployeeAuthenticationLoginResponseModel> Login(
+        EmployeeAuthenticationLoginRequestModel user,
         CancellationToken cancellationToken = default);
 
-    Task<LoginResponseModel> Refresh(
+    Task<EmployeeAuthenticationLoginResponseModel> Refresh(
         string refreshToken,
         CancellationToken cancellationToken = default);
 }

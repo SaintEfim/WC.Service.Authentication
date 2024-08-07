@@ -18,7 +18,7 @@ public class GreeterAuthenticationService : GreeterAuthentication.GreeterAuthent
         LoginRequest request,
         ServerCallContext context)
     {
-        var loginResponse = await _provider.Login(new LoginRequestModel
+        var loginResponse = await _provider.Login(new EmployeeAuthenticationLoginRequestModel
         {
             Email = request.Email,
             Password = request.Password

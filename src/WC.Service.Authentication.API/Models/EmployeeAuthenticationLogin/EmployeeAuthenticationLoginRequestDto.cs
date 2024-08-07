@@ -1,21 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WC.Service.Authentication.API.Models.Login;
+namespace WC.Service.Authentication.API.Models.EmployeeAuthenticationLogin;
 
 /// <summary>
 ///     Represents the data transfer object for login requests.
 /// </summary>
-public class LoginRequestDto
+public class EmployeeAuthenticationLoginRequestDto
 {
     /// <summary>
     ///     The email address of the user.
     /// </summary>
     [Required]
-    public required string Email { get; set; } = string.Empty;
+    public required string Email { get; set; }
 
     /// <summary>
     ///     The password of the user.
     /// </summary>
     [Required]
-    public required string Password { get; set; } = string.Empty;
+    public required string Password { get; set; }
 }

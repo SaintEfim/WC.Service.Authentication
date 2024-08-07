@@ -25,27 +25,20 @@ public class EmployeeAuthenticationManager
     }
 
     public async Task ResetPassword(
-        ResetPasswordModel resetPasswordModel,
+        EmployeeAuthenticationResetPasswordModel employeeAuthenticationResetPasswordModel,
         CancellationToken cancellationToken = default)
     {
-        Validate<ResetPasswordModel, IDomainUpdateValidator>(resetPasswordModel, cancellationToken);
+        Validate<EmployeeAuthenticationResetPasswordModel, IDomainUpdateValidator>(
+            employeeAuthenticationResetPasswordModel, cancellationToken);
 
-        VerifyCredentialsResponseModel verifyResponse;
-        try
-        {
-            verifyResponse = await _personalDataClient.VerifyCredentials(
-                new VerifyCredentialsRequestModel
-                {
-                    Email = resetPasswordModel.Email,
-                    Password = resetPasswordModel.OldPassword
-                }, cancellationToken);
-
-            if (verifyResponse == null)
+        var verifyResponse = await _personalDataClient.VerifyCredentials(
+            new VerifyCredentialsRequestModel
             {
-                throw new AuthenticationException("Invalid email or password.");
-            }
-        }
-        catch (Exception)
+                Email = employeeAuthenticationResetPasswordModel.Email,
+                Password = employeeAuthenticationResetPasswordModel.OldPassword
+            }, cancellationToken);
+
+        if (verifyResponse == null)
         {
             throw new AuthenticationException("Invalid email or password.");
         }
@@ -54,7 +47,7 @@ public class EmployeeAuthenticationManager
             new PersonalDataResetPasswordRequestModel
             {
                 Id = verifyResponse.PersonalDataId,
-                Password = resetPasswordModel.NewPassword
+                Password = employeeAuthenticationResetPasswordModel.NewPassword
             }, cancellationToken);
     }
 }

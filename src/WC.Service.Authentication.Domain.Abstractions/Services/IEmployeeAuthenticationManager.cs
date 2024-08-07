@@ -5,6 +5,6 @@ namespace WC.Service.Authentication.Domain.Services;
 public interface IEmployeeAuthenticationManager
 {
     Task ResetPassword(
-        ResetPasswordModel resetPassword,
+        EmployeeAuthenticationResetPasswordModel employeeAuthenticationResetPassword,
         CancellationToken cancellationToken = default);
 }

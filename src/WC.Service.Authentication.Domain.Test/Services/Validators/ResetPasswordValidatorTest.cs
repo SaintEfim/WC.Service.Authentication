@@ -17,14 +17,14 @@
 //     [Fact]
 //     public void ResetPassword_Positive_Create_New_Record()
 //     {
-//         var res = _validator.TestValidate(ResetPasswordData.ResetPasswordModel());
+//         var res = _validator.TestValidate(ResetPasswordData.EmployeeAuthenticationResetPasswordModel());
 //         res.ShouldNotHaveAnyValidationErrors();
 //     }
 //
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Empty_Email()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.Email = string.Empty;
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -35,7 +35,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Short_Email()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.Email = new string('x', 7);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -46,7 +46,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Long_Email()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.Email = new string('x', 65);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -57,7 +57,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_An_Incorrect_Email()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.Email = "test@@mail.ru";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -68,7 +68,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_Without_Special_Character()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.Email = "testmail.ru";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -79,7 +79,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Not_Correct_Domain_In_Email()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.Email = "test@mail.com";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -90,7 +90,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Empty_Old_Password()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = string.Empty;
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -101,7 +101,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Short_Old_Password()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = new string('x', 7);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -112,7 +112,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Long_Old_Password()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = new string('x', 65);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -123,7 +123,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Old_Password_Without_Number()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = "Testttt@";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -134,7 +134,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Old_Password_Without_Lowercase_Letters()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = "TEEEEEEST@4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -145,7 +145,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Old_Password_Without_Uppercase_Letters()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = "teeeeeeest@4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -156,7 +156,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Old_Password_Without_Special_Character()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = "teeeeeeestE4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -167,7 +167,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_A_Old_Password_That_Has_A_Space()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = "teeeeee estE4@";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -178,7 +178,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Empty_New_Password()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = string.Empty;
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -189,7 +189,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Short_New_Password()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = new string('x', 7);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -200,7 +200,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_Long_New_Password()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = new string('x', 65);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -211,7 +211,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_New_Password_Without_Number()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = "Testttt@";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -222,7 +222,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_New_Password_Without_Lowercase_Letters()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = "TEEEEEEST@4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -233,7 +233,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_New_Password_Without_Uppercase_Letters()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = "teeeeeeest@4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -244,7 +244,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_New_Password_Without_Special_Character()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = "teeeeeeestE4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -255,7 +255,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_A_New_Password_That_Has_A_Space()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.NewPassword = "teeeeee estE4@";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -266,7 +266,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_New_Password_Is_Equal_To_Old_Password()
 //     {
-//         var model = ResetPasswordData.ResetPasswordModel();
+//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
 //         model.OldPassword = "Test1234@";
 //         model.NewPassword = "Test1234@";
 //         var res = _validator.TestValidate(model);

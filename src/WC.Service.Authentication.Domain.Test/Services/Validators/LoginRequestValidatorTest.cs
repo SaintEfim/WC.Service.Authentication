@@ -17,14 +17,14 @@
 //     [Fact]
 //     public void LoginRequest_Positive_Create_New_Record()
 //     {
-//         var res = _validator.TestValidate(LoginRequestData.LoginRequestModel());
+//         var res = _validator.TestValidate(LoginRequestData.EmployeeAuthenticationLoginRequestModel());
 //         res.ShouldNotHaveAnyValidationErrors();
 //     }
 //
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Empty_Email()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Email = string.Empty;
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -35,7 +35,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Short_Email()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Email = new string('x', 7);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -46,7 +46,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Long_Email()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Email = new string('x', 65);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -57,7 +57,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_An_Incorrect_Email()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Email = "test@@mail.ru";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -68,7 +68,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_Without_Special_Character()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Email = "testmail.ru";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -79,7 +79,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Not_Correct_Domain_In_Email()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Email = "test@mail.com";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -90,7 +90,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Empty_Password()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = string.Empty;
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -101,7 +101,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Short_Password()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = new string('x', 7);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -112,7 +112,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Long_Password()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = new string('x', 65);
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -123,7 +123,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Password_Without_Number()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = "Testttt@";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -134,7 +134,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Password_Without_Lowercase_Letters()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = "TEEEEEEST@4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -145,7 +145,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Password_Without_Uppercase_Letters()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = "teeeeeeest@4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -156,7 +156,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_Password_Without_Special_Character()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = "teeeeeeestE4";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()
@@ -167,7 +167,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_A_Password_That_Has_A_Space()
 //     {
-//         var model = LoginRequestData.LoginRequestModel();
+//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
 //         model.Password = "teeeeee estE4@";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()

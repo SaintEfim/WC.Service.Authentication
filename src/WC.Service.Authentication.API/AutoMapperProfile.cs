@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using WC.Library.Web.Models;
 using WC.Service.Authentication.API.Models;
-using WC.Service.Authentication.API.Models.Login;
+using WC.Service.Authentication.API.Models.EmployeeAuthenticationLogin;
 using WC.Service.Authentication.Domain.Models;
 using WC.Service.Authentication.Domain.Models.Login;
 
@@ -11,10 +10,10 @@ public sealed class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<LoginRequestDto, LoginRequestModel>();
+        CreateMap<EmployeeAuthenticationLoginRequestDto, EmployeeAuthenticationLoginRequestModel>();
 
-        CreateMap<LoginResponseModel, LoginResponseDto>();
+        CreateMap<EmployeeAuthenticationLoginResponseModel, EmployeeAuthenticationLoginResponseDto>();
 
-        CreateMap<ResetPasswordDto, ResetPasswordModel>();
+        CreateMap<EmployeeAuthenticationResetPasswordDto, EmployeeAuthenticationResetPasswordModel>();
     }
 }
