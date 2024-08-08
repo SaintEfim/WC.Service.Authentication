@@ -1,6 +1,6 @@
-﻿namespace WC.Service.Authentication.gRPC.Client.Models;
+﻿namespace WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 
-public class LoginResponseModel
+public class AuthenticationLoginResponseModel
 {
     public required string TokenType { get; set; }
 

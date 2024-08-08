@@ -1,10 +1,10 @@
-﻿// using WC.Service.Authentication.Domain.Models.Login;
+﻿// using WC.Service.AuthenticationLogin.Domain.Models.AuthenticationLogin;
 //
-// namespace WC.Service.Authentication.Domain.Test.Services.Data;
+// namespace WC.Service.AuthenticationLogin.Domain.Test.Services.Data;
 //
 // public static class LoginRequestData
 // {
-//     public static readonly Func<LoginRequestModel> LoginRequestModel = () => new LoginRequestModel
+//     public static readonly Func<LoginRequestModel> AuthenticationLoginRequestModel = () => new AuthenticationLoginRequestModel
 //     {
 //         Email = "Test@gmail.com",
 //         Password = "Test1234@"

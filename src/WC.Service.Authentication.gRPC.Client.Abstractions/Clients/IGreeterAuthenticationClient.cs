@@ -4,7 +4,7 @@ namespace WC.Service.Authentication.gRPC.Client.Clients;
 
 public interface IGreeterAuthenticationClient
 {
-    Task<LoginResponseModel> GetLoginResponse(
-        LoginRequestModel request,
+    Task<AuthenticationLoginResponseModel> GetLoginResponse(
+        AuthenticationLoginRequestModel request,
         CancellationToken cancellationToken = default);
 }

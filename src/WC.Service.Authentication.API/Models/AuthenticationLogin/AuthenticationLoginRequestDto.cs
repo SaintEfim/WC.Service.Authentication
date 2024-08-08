@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WC.Service.Authentication.API.Models.EmployeeAuthenticationLogin;
+namespace WC.Service.Authentication.API.Models.AuthenticationLogin;
 
 /// <summary>
 ///     Represents the data transfer object for login requests.
 /// </summary>
-public class EmployeeAuthenticationLoginRequestDto
+public class AuthenticationLoginRequestDto
 {
     /// <summary>
     ///     The email address of the user.

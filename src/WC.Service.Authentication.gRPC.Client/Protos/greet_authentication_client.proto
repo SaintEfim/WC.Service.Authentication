@@ -5,15 +5,15 @@ option csharp_namespace = "WC.Service.Authentication.gRPC.Client.Clients";
 package authentication;
 
 service GreeterAuthentication {
-  rpc GetLoginResponse (LoginRequest) returns (LoginResponse);
+  rpc GetLoginResponse (AuthenticationLoginRequest) returns (AuthenticationLoginResponse);
 }
 
-message LoginRequest {
+message AuthenticationLoginRequest {
   string email = 1;
   string password = 2;
 }
 
-message LoginResponse {
+message AuthenticationLoginResponse {
   string tokenType = 1;
   string accessToken = 2;
   int32 expiresIn = 3;

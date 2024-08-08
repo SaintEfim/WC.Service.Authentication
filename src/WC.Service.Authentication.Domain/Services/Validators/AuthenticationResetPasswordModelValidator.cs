@@ -4,11 +4,11 @@ using WC.Service.Authentication.Domain.Models;
 
 namespace WC.Service.Authentication.Domain.Services.Validators;
 
-public class EmployeeAuthenticationResetPasswordModelValidator
-    : AbstractValidator<EmployeeAuthenticationResetPasswordModel>,
+public class AuthenticationResetPasswordModelValidator
+    : AbstractValidator<AuthenticationResetPasswordModel>,
         IDomainUpdateValidator
 {
-    public EmployeeAuthenticationResetPasswordModelValidator()
+    public AuthenticationResetPasswordModelValidator()
     {
         RuleFor(x => x.Email)
             .NotEmpty();

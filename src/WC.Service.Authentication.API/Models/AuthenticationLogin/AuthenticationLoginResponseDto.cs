@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WC.Service.Authentication.API.Models.EmployeeAuthenticationLogin;
+namespace WC.Service.Authentication.API.Models.AuthenticationLogin;
 
-public class EmployeeAuthenticationLoginResponseDto
+public class AuthenticationLoginResponseDto
 {
     [Required]
     public required string TokenType { get; init; }

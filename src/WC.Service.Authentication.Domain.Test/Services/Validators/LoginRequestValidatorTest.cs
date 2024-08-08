@@ -3,7 +3,7 @@
 // using WC.Service.Authentication.Domain.Services.Validators;
 // using WC.Service.Authentication.Domain.Test.Services.Data;
 //
-// namespace WC.Service.Authentication.Domain.Test.Services.Validators;
+// namespace WC.Service.AuthenticationLogin.Domain.Test.Services.Validators;
 //
 // public class LoginRequestValidatorTest
 // {
@@ -167,7 +167,7 @@
 //     [Fact]
 //     public void LoginRequest_Negative_Create_New_Record_With_A_Password_That_Has_A_Space()
 //     {
-//         var model = LoginRequestData.EmployeeAuthenticationLoginRequestModel();
+//         var model = LoginRequestData.AuthenticationLoginRequestModel();
 //         model.Password = "teeeeee estE4@";
 //         var res = _validator.TestValidate(model);
 //         res.ShouldHaveAnyValidationError()

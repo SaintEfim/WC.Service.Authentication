@@ -1,30 +1,30 @@
 ﻿using Grpc.Core;
-using WC.Service.Authentication.Domain.Models.Login;
+using WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 using WC.Service.Authentication.Domain.Services;
 
 namespace WC.Service.Authentication.API.gRPC.Services;
 
 public class GreeterAuthenticationService : GreeterAuthentication.GreeterAuthenticationBase
 {
-    private readonly IEmployeeAuthenticationProvider _provider;
+    private readonly IAuthenticationProvider _provider;
 
     public GreeterAuthenticationService(
-        IEmployeeAuthenticationProvider provider)
+        IAuthenticationProvider provider)
     {
         _provider = provider;
     }
 
-    public override async Task<LoginResponse> GetLoginResponse(
-        LoginRequest request,
+    public override async Task<AuthenticationLoginResponse> GetLoginResponse(
+        AuthenticationLoginRequest request,
         ServerCallContext context)
     {
-        var loginResponse = await _provider.Login(new EmployeeAuthenticationLoginRequestModel
+        var loginResponse = await _provider.Login(new AuthenticationLoginRequestModel
         {
             Email = request.Email,
             Password = request.Password
         }, context.CancellationToken);
 
-        return new LoginResponse
+        return new AuthenticationLoginResponse
         {
             TokenType = loginResponse.TokenType,
             AccessToken = loginResponse.AccessToken,

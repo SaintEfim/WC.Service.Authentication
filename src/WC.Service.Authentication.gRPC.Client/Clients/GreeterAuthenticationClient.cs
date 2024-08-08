@@ -14,17 +14,17 @@ public class GreeterAuthenticationClient : IGreeterAuthenticationClient
         _client = new GreeterAuthentication.GreeterAuthenticationClient(channel);
     }
 
-    public async Task<LoginResponseModel> GetLoginResponse(
-        LoginRequestModel request,
+    public async Task<AuthenticationLoginResponseModel> GetLoginResponse(
+        AuthenticationLoginRequestModel request,
         CancellationToken cancellationToken = default)
     {
-        var loginResponse = await _client.GetLoginResponseAsync(new LoginRequest
+        var loginResponse = await _client.GetLoginResponseAsync(new AuthenticationLoginRequest
         {
             Email = request.Email,
             Password = request.Password
         }, cancellationToken: cancellationToken);
 
-        return new LoginResponseModel
+        return new AuthenticationLoginResponseModel
         {
             TokenType = loginResponse.TokenType,
             AccessToken = loginResponse.AccessToken,

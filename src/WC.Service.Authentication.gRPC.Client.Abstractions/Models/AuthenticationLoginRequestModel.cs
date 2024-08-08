@@ -1,6 +1,6 @@
 ﻿namespace WC.Service.Authentication.gRPC.Client.Models;
 
-public class LoginRequestModel
+public class AuthenticationLoginRequestModel
 {
     public required string Email { get; set; }
 

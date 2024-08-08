@@ -4,9 +4,9 @@ using NSwag.Annotations;
 using WC.Library.Web.Controllers;
 using WC.Library.Web.Models;
 using WC.Service.Authentication.API.Models;
-using WC.Service.Authentication.API.Models.EmployeeAuthenticationLogin;
+using WC.Service.Authentication.API.Models.AuthenticationLogin;
 using WC.Service.Authentication.Domain.Models;
-using WC.Service.Authentication.Domain.Models.Login;
+using WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 using WC.Service.Authentication.Domain.Services;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -15,18 +15,18 @@ namespace WC.Service.Authentication.API.Controllers;
 /// <summary>
 ///     The user type management controller.
 /// </summary>
-[Route("api/v1/employee-authentication")]
-public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthenticationController>
+[Route("api/v1/authentication")]
+public class AuthenticationController : ApiControllerBase<AuthenticationController>
 {
-    private readonly IEmployeeAuthenticationManager _manager;
-    private readonly IEmployeeAuthenticationProvider _provider;
+    private readonly IAuthenticationManager _manager;
+    private readonly IAuthenticationProvider _provider;
 
     /// <inheritdoc/>
-    public EmployeeAuthenticationController(
+    public AuthenticationController(
         IMapper mapper,
-        ILogger<EmployeeAuthenticationController> logger,
-        IEmployeeAuthenticationManager manager,
-        IEmployeeAuthenticationProvider provider)
+        ILogger<AuthenticationController> logger,
+        IAuthenticationManager manager,
+        IAuthenticationProvider provider)
         : base(mapper, logger)
     {
         _manager = manager;
@@ -36,23 +36,22 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     /// <summary>
     ///     Logs in a user using provided authentications.
     /// </summary>
-    /// <param name="employeeAuthenticationLoginRequest">The login request data.</param>
+    /// <param name="authenticationLoginRequest">The login request data.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
     [HttpPost("login")]
-    [OpenApiOperation(nameof(LoginEmployee))]
-    [SwaggerResponse(Status201Created, typeof(LoginResponseDto))]
+    [OpenApiOperation(nameof(Login))]
+    [SwaggerResponse(Status201Created, typeof(AuthenticationLoginResponseDto))]
     [SwaggerResponse(Status401Unauthorized, typeof(ErrorDto))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
-    public async Task<ActionResult<LoginResponseDto>> LoginEmployee(
-        [FromBody] EmployeeAuthenticationLoginRequestDto employeeAuthenticationLoginRequest,
+    public async Task<ActionResult<AuthenticationLoginResponseDto>> Login(
+        [FromBody] AuthenticationLoginRequestDto authenticationLoginRequest,
         CancellationToken cancellationToken = default)
     {
         var createResult =
-            await _provider.Login(
-                Mapper.Map<EmployeeAuthenticationLoginRequestModel>(employeeAuthenticationLoginRequest),
+            await _provider.Login(Mapper.Map<AuthenticationLoginRequestModel>(authenticationLoginRequest),
                 cancellationToken);
 
-        return Ok(Mapper.Map<LoginResponseDto>(createResult));
+        return Ok(Mapper.Map<AuthenticationLoginResponseDto>(createResult));
     }
 
     /// <summary>
@@ -62,30 +61,29 @@ public class EmployeeAuthenticationController : ApiControllerBase<EmployeeAuthen
     /// <param name="cancellationToken">The operation cancellation token.</param>
     [HttpPost("refresh")]
     [OpenApiOperation(nameof(RefreshToken))]
-    [SwaggerResponse(Status200OK, typeof(EmployeeAuthenticationLoginResponseDto))]
-    public async Task<ActionResult<EmployeeAuthenticationLoginResponseDto>> RefreshToken(
+    [SwaggerResponse(Status200OK, typeof(AuthenticationLoginResponseDto))]
+    public async Task<ActionResult<AuthenticationLoginResponseDto>> RefreshToken(
         string refreshToken,
         CancellationToken cancellationToken = default)
     {
         var res = await _provider.Refresh(refreshToken, cancellationToken);
-        return Ok(Mapper.Map<LoginResponseDto>(res));
+        return Ok(Mapper.Map<AuthenticationLoginResponseDto>(res));
     }
 
     /// <summary>
     ///     Resets a user's password.
     /// </summary>
-    /// <param name="employeeAuthenticationResetPassword">The reset password request data.</param>
+    /// <param name="authenticationResetPassword">The reset password request data.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
     [HttpPatch("employeeAuthenticationResetPassword")]
     [OpenApiOperation(nameof(ResetPassword))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
     public async Task<IActionResult> ResetPassword(
-        [FromBody] EmployeeAuthenticationResetPasswordDto employeeAuthenticationResetPassword,
+        [FromBody] AuthenticationResetPasswordDto authenticationResetPassword,
         CancellationToken cancellationToken = default)
     {
-        await _manager.ResetPassword(
-            Mapper.Map<EmployeeAuthenticationResetPasswordModel>(employeeAuthenticationResetPassword),
+        await _manager.ResetPassword(Mapper.Map<AuthenticationResetPasswordModel>(authenticationResetPassword),
             cancellationToken);
         return Ok();
     }

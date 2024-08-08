@@ -1,9 +1,9 @@
 ﻿// using System.Globalization;
 // using FluentValidation.TestHelper;
 // using WC.Service.Authentication.Domain.Services.Validators;
-// using WC.Service.Authentication.Domain.Test.Services.Data;
+// using WC.Service.AuthenticationLogin.Domain.Test.Services.Data;
 //
-// namespace WC.Service.Authentication.Domain.Test.Services.Validators;
+// namespace WC.Service.AuthenticationLogin.Domain.Test.Services.Validators;
 //
 // public class ResetPasswordValidatorTest
 // {
@@ -266,7 +266,7 @@
 //     [Fact]
 //     public void ResetPassword_Negative_Create_New_Record_With_New_Password_Is_Equal_To_Old_Password()
 //     {
-//         var model = ResetPasswordData.EmployeeAuthenticationResetPasswordModel();
+//         var model = ResetPasswordData.AuthenticationResetPasswordModel();
 //         model.OldPassword = "Test1234@";
 //         model.NewPassword = "Test1234@";
 //         var res = _validator.TestValidate(model);

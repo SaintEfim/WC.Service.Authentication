@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace WC.Service.Authentication.Domain.Services;
+namespace WC.Service.Authentication.Domain.Helpers;
 
 public class AuthenticationSettings
 {

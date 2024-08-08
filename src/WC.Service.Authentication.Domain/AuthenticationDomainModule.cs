@@ -25,12 +25,12 @@ public class AuthenticationDomainModule : Module
             .As<IPersonalDataClientConfiguration>()
             .InstancePerLifetimeScope();
 
-        builder.RegisterType<EmployeeAuthenticationManager>()
-            .As<IEmployeeAuthenticationManager>()
+        builder.RegisterType<AuthenticationManager>()
+            .As<IAuthenticationManager>()
             .InstancePerLifetimeScope();
 
-        builder.RegisterType<EmployeeAuthenticationProvider>()
-            .As<IEmployeeAuthenticationProvider>()
+        builder.RegisterType<AuthenticationProvider>()
+            .As<IAuthenticationProvider>()
             .InstancePerLifetimeScope();
 
         builder.RegisterAssemblyTypes(ThisAssembly)

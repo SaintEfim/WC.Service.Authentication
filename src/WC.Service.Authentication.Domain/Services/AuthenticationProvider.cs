@@ -4,21 +4,21 @@ using FluentValidation;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
 using WC.Service.Authentication.Domain.Helpers;
-using WC.Service.Authentication.Domain.Models.Login;
+using WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 using WC.Service.PersonalData.gRPC.Client.Clients;
 using WC.Service.PersonalData.gRPC.Client.Models.Verify;
 
 namespace WC.Service.Authentication.Domain.Services;
 
-public class EmployeeAuthenticationProvider
+public class AuthenticationProvider
     : ValidatorBase<ModelBase>,
-        IEmployeeAuthenticationProvider
+        IAuthenticationProvider
 {
     private readonly AuthenticationSettings _authenticationSettings;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IGreeterPersonalDataClient _personalDataClient;
 
-    public EmployeeAuthenticationProvider(
+    public AuthenticationProvider(
         IEnumerable<IValidator> validators,
         IJwtTokenGenerator jwtTokenGenerator,
         IGreeterPersonalDataClient personalDataClient,
@@ -30,21 +30,21 @@ public class EmployeeAuthenticationProvider
         _authenticationSettings = authenticationSettings;
     }
 
-    public async Task<EmployeeAuthenticationLoginResponseModel> Login(
-        EmployeeAuthenticationLoginRequestModel employeeAuthenticationLoginRequest,
+    public async Task<AuthenticationLoginResponseModel> Login(
+        AuthenticationLoginRequestModel authenticationLoginRequest,
         CancellationToken cancellationToken = default)
     {
-        Validate(new EmployeeAuthenticationLoginRequestModel
+        Validate(new AuthenticationLoginRequestModel
         {
-            Email = employeeAuthenticationLoginRequest.Email,
-            Password = employeeAuthenticationLoginRequest.Password
-        }, nameof(IEmployeeAuthenticationProvider.Login), cancellationToken);
+            Email = authenticationLoginRequest.Email,
+            Password = authenticationLoginRequest.Password
+        }, nameof(IAuthenticationProvider.Login), cancellationToken);
 
         var verifyResponse = await _personalDataClient.VerifyCredentials(
             new VerifyCredentialsRequestModel
             {
-                Email = employeeAuthenticationLoginRequest.Email,
-                Password = employeeAuthenticationLoginRequest.Password
+                Email = authenticationLoginRequest.Email,
+                Password = authenticationLoginRequest.Password
             }, cancellationToken);
 
         if (verifyResponse == null)
@@ -59,7 +59,7 @@ public class EmployeeAuthenticationProvider
             verifyResponse.Role, _authenticationSettings.RefreshSecretKey,
             TimeSpan.Parse(_authenticationSettings.RefreshHours), cancellationToken);
 
-        return new EmployeeAuthenticationLoginResponseModel
+        return new AuthenticationLoginResponseModel
         {
             TokenType = "Bearer",
             AccessToken = accessToken,
@@ -69,7 +69,7 @@ public class EmployeeAuthenticationProvider
         };
     }
 
-    public async Task<EmployeeAuthenticationLoginResponseModel> Refresh(
+    public async Task<AuthenticationLoginResponseModel> Refresh(
         string refreshToken,
         CancellationToken cancellationToken = default)
     {
@@ -84,7 +84,7 @@ public class EmployeeAuthenticationProvider
             _authenticationSettings.RefreshSecretKey, TimeSpan.Parse(_authenticationSettings.RefreshHours),
             cancellationToken);
 
-        return new EmployeeAuthenticationLoginResponseModel
+        return new AuthenticationLoginResponseModel
         {
             TokenType = "Bearer",
             AccessToken = newAccessToken,

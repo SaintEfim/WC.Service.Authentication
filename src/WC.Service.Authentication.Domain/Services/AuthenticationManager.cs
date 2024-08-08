@@ -10,13 +10,13 @@ using WC.Service.PersonalData.gRPC.Client.Models.Verify;
 
 namespace WC.Service.Authentication.Domain.Services;
 
-public class EmployeeAuthenticationManager
+public class AuthenticationManager
     : ValidatorBase<ModelBase>,
-        IEmployeeAuthenticationManager
+        IAuthenticationManager
 {
     private readonly IGreeterPersonalDataClient _personalDataClient;
 
-    public EmployeeAuthenticationManager(
+    public AuthenticationManager(
         IEnumerable<IValidator> validators,
         IGreeterPersonalDataClient personalDataClient)
         : base(validators)
@@ -25,17 +25,17 @@ public class EmployeeAuthenticationManager
     }
 
     public async Task ResetPassword(
-        EmployeeAuthenticationResetPasswordModel employeeAuthenticationResetPasswordModel,
+        AuthenticationResetPasswordModel authenticationResetPasswordModel,
         CancellationToken cancellationToken = default)
     {
-        Validate<EmployeeAuthenticationResetPasswordModel, IDomainUpdateValidator>(
-            employeeAuthenticationResetPasswordModel, cancellationToken);
+        Validate<AuthenticationResetPasswordModel, IDomainUpdateValidator>(
+            authenticationResetPasswordModel, cancellationToken);
 
         var verifyResponse = await _personalDataClient.VerifyCredentials(
             new VerifyCredentialsRequestModel
             {
-                Email = employeeAuthenticationResetPasswordModel.Email,
-                Password = employeeAuthenticationResetPasswordModel.OldPassword
+                Email = authenticationResetPasswordModel.Email,
+                Password = authenticationResetPasswordModel.OldPassword
             }, cancellationToken);
 
         if (verifyResponse == null)
@@ -47,7 +47,7 @@ public class EmployeeAuthenticationManager
             new PersonalDataResetPasswordRequestModel
             {
                 Id = verifyResponse.PersonalDataId,
-                Password = employeeAuthenticationResetPasswordModel.NewPassword
+                Password = authenticationResetPasswordModel.NewPassword
             }, cancellationToken);
     }
 }
