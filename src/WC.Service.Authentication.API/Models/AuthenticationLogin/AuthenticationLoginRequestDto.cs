@@ -8,13 +8,13 @@ namespace WC.Service.Authentication.API.Models.AuthenticationLogin;
 public class AuthenticationLoginRequestDto
 {
     /// <summary>
-    ///     The email address of the user.
+    ///     The email address of the employee.
     /// </summary>
     [Required]
     public required string Email { get; set; }
 
     /// <summary>
-    ///     The password of the user.
+    ///     The password of the employee.
     /// </summary>
     [Required]
     public required string Password { get; set; }

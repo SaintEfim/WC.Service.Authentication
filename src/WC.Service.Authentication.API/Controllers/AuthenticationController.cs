@@ -13,7 +13,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 namespace WC.Service.Authentication.API.Controllers;
 
 /// <summary>
-///     The user type management controller.
+///     The employee type management controller.
 /// </summary>
 [Route("api/v1/authentication")]
 public class AuthenticationController : ApiControllerBase<AuthenticationController>
@@ -34,7 +34,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     }
 
     /// <summary>
-    ///     Logs in a user using provided authentications.
+    ///     Logs in a employee using provided authentications.
     /// </summary>
     /// <param name="authenticationLoginRequest">The login request data.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
@@ -55,7 +55,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     }
 
     /// <summary>
-    ///     Refreshes a user's login session.
+    ///     Refreshes a employee's login session.
     /// </summary>
     /// <param name="refreshToken">The refresh token.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
@@ -71,7 +71,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     }
 
     /// <summary>
-    ///     Resets a user's password.
+    ///     Resets a employee's password.
     /// </summary>
     /// <param name="authenticationResetPassword">The reset password request data.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
