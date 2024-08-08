@@ -75,7 +75,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     /// </summary>
     /// <param name="authenticationResetPassword">The reset password request data.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
-    [HttpPatch("employeeAuthenticationResetPassword")]
+    [HttpPatch("authenticationResetPassword")]
     [OpenApiOperation(nameof(ResetPassword))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]

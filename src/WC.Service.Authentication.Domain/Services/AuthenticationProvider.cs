@@ -99,16 +99,16 @@ public class AuthenticationProvider
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(refreshToken);
-        var employee = await _jwtTokenGenerator.DecodeToken(refreshToken, _authenticationSettings.RefreshSecretKey,
+        var user = await _jwtTokenGenerator.DecodeToken(refreshToken, _authenticationSettings.RefreshSecretKey,
             cancellationToken);
-        var employeeId = employee.FindFirst(ClaimTypes.NameIdentifier)
+        var userId = user.FindFirst(ClaimTypes.NameIdentifier)
             ?.Value;
-        var employeeRole = employee.FindFirst(ClaimTypes.Role)
+        var userRole = user.FindFirst(ClaimTypes.Role)
             ?.Value;
 
-        if (employeeId != null && employeeRole != null)
+        if (userId != null && userRole != null)
         {
-            return (employeeId, employeeRole);
+            return (userId, userRole);
         }
 
         throw new Exception("An error occurred while processing your request.");
