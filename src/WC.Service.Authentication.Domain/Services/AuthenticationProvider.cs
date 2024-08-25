@@ -34,11 +34,7 @@ public class AuthenticationProvider
         AuthenticationLoginRequestModel authenticationLoginRequest,
         CancellationToken cancellationToken = default)
     {
-        Validate(new AuthenticationLoginRequestModel
-        {
-            Email = authenticationLoginRequest.Email,
-            Password = authenticationLoginRequest.Password
-        }, nameof(IAuthenticationProvider.Login), cancellationToken);
+        Validate(authenticationLoginRequest, nameof(IAuthenticationProvider.Login), cancellationToken);
 
         var verifyResponse = await _personalDataClient.VerifyCredentials(
             new VerifyCredentialsRequestModel
