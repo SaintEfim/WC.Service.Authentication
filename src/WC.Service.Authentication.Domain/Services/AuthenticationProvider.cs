@@ -3,6 +3,7 @@ using System.Security.Claims;
 using FluentValidation;
 using WC.Library.Domain.Models;
 using WC.Library.Domain.Services.Validators;
+using WC.Library.Domain.Validators;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 using WC.Service.PersonalData.gRPC.Client.Clients;
@@ -34,7 +35,8 @@ public class AuthenticationProvider
         AuthenticationLoginRequestModel authenticationLoginRequest,
         CancellationToken cancellationToken = default)
     {
-        Validate(authenticationLoginRequest, nameof(IAuthenticationProvider.Login), cancellationToken);
+        Validate<AuthenticationLoginRequestModel, IDomainCreateValidator>(authenticationLoginRequest,
+            cancellationToken);
 
         var verifyResponse = await _personalDataClient.VerifyCredentials(
             new VerifyCredentialsRequestModel

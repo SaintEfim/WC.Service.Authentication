@@ -6,7 +6,7 @@ namespace WC.Service.Authentication.Domain.Services.Validators;
 
 public class AuthenticationLoginRequestModelValidator
     : AbstractValidator<AuthenticationLoginRequestModel>,
-        IDomainCustomValidator
+        IDomainCreateValidator
 {
     public AuthenticationLoginRequestModelValidator()
     {
@@ -16,6 +16,4 @@ public class AuthenticationLoginRequestModelValidator
         RuleFor(x => x.Password)
             .NotEmpty();
     }
-
-    public string ActionName => nameof(IAuthenticationProvider.Login);
 }

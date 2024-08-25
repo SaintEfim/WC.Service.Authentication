@@ -28,8 +28,8 @@ public class AuthenticationManager
         AuthenticationResetPasswordModel authenticationResetPasswordModel,
         CancellationToken cancellationToken = default)
     {
-        Validate<AuthenticationResetPasswordModel, IDomainUpdateValidator>(
-            authenticationResetPasswordModel, cancellationToken);
+        Validate<AuthenticationResetPasswordModel, IDomainUpdateValidator>(authenticationResetPasswordModel,
+            cancellationToken);
 
         var verifyResponse = await _personalDataClient.VerifyCredentials(
             new VerifyCredentialsRequestModel
