@@ -23,12 +23,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NSwag.Annotations" Version="14.1.0"/>
-    <PackageReference Include="WC.Library.Web" Version="1.0.28" />
+    <PackageReference Include="WC.Library.Web" Version="1.0.32"/>
   </ItemGroup>
 
   <ItemGroup>
