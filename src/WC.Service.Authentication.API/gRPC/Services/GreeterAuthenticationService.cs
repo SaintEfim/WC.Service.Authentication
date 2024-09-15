@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using FluentValidation;
+using Grpc.Core;
 using WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 using WC.Service.Authentication.Domain.Services;
 
@@ -18,18 +19,29 @@ public class GreeterAuthenticationService : GreeterAuthentication.GreeterAuthent
         AuthenticationLoginRequest request,
         ServerCallContext context)
     {
-        var loginResponse = await _provider.Login(new AuthenticationLoginRequestModel
+        try
         {
-            Email = request.Email,
-            Password = request.Password
-        }, context.CancellationToken);
+            var loginResponse = await _provider.Login(new AuthenticationLoginRequestModel
+            {
+                Email = request.Email,
+                Password = request.Password
+            }, context.CancellationToken);
 
-        return new AuthenticationLoginResponse
+            return new AuthenticationLoginResponse
+            {
+                TokenType = loginResponse.TokenType,
+                AccessToken = loginResponse.AccessToken,
+                ExpiresIn = loginResponse.ExpiresIn,
+                RefreshToken = loginResponse.RefreshToken
+            };
+        }
+        catch (ValidationException ex)
         {
-            TokenType = loginResponse.TokenType,
-            AccessToken = loginResponse.AccessToken,
-            ExpiresIn = loginResponse.ExpiresIn,
-            RefreshToken = loginResponse.RefreshToken
-        };
+            throw new RpcException(new Status(StatusCode.InvalidArgument, $"{ex.Message}"));
+        }
+        catch (Exception ex)
+        {
+            throw new RpcException(new Status(StatusCode.Internal, $"{ex.Message}"));
+        }
     }
 }
