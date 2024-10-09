@@ -1,0 +1,22 @@
+{
+  "runtime": "Net80",
+  "defaultVariables": null,
+  "documentGenerator": {
+    "aspNetCoreToOpenApi": {
+      "project": "WC.Service.Authentication.API.csproj",
+      "documentName": "v1",
+      "msBuildProjectExtensionsPath": null,
+      "configuration": "Debug",
+      "runtime": null,
+      "targetFramework": null,
+      "noBuild": true,
+      "msBuildOutputPath": null,
+      "verbose": true,
+      "workingDirectory": null,
+      "aspNetCoreEnvironment": "Development",
+      "output": "WC.Service.Authentication.API.swagger.json",
+      "newLineBehavior": "Auto"
+    }
+  },
+  "codeGenerators": {}
+}

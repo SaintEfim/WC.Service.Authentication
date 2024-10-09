@@ -1,0 +1,253 @@
+{
+  "x-generator": "NSwag v14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "NSwag.AspNetCore.Launcher",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/v1/authentication/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logs in a employee using provided authentications.",
+        "operationId": "Login",
+        "requestBody": {
+          "x-name": "authenticationLoginRequest",
+          "description": "The login request data.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticationLoginRequestDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationLoginResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authentication/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refreshes a employee's login session.",
+        "operationId": "RefreshToken",
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "query",
+            "description": "The refresh token.",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationLoginResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authentication/authenticationResetPassword": {
+      "patch": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Resets a employee's password.",
+        "operationId": "ResetPassword",
+        "requestBody": {
+          "x-name": "authenticationResetPassword",
+          "description": "The reset password request data.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticationResetPasswordDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthenticationLoginResponseDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tokenType",
+          "accessToken",
+          "expiresIn",
+          "refreshToken"
+        ],
+        "properties": {
+          "tokenType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "accessToken": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expiresIn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "refreshToken": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "ErrorDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "stackTrace": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "extensions": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "AuthenticationLoginRequestDto": {
+        "type": "object",
+        "description": "Represents the data transfer object for login requests.\n            ",
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address of the employee.\n            ",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "description": "The password of the employee.\n            ",
+            "minLength": 1
+          }
+        }
+      },
+      "AuthenticationResetPasswordDto": {
+        "type": "object",
+        "description": "Represents the data transfer object for resetting a employee's password.\n            ",
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "oldPassword",
+          "newPassword"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address of the employee.\n            ",
+            "minLength": 1
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "The old password of the employee.\n            ",
+            "minLength": 1
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "The new password of the employee.\n            ",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "description": "Type into the textbox: Bearer {your JWT token}.",
+        "name": "Authorization",
+        "in": "header",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
