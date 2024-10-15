@@ -46,7 +46,7 @@ public class AuthenticationManager
         await _personalDataClient.ResetPassword(
             new PersonalDataResetPasswordRequestModel
             {
-                Id = verifyResponse.PersonalDataId,
+                Id = verifyResponse.EmployeeId,
                 Password = authenticationResetPasswordModel.NewPassword
             }, cancellationToken);
     }

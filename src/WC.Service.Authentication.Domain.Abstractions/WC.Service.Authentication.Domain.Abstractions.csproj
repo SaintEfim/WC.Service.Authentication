@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="WC.Library.Domain.Abstractions" Version="1.0.11"/>
-    <PackageReference Include="WC.Service.PersonalData.gRPC.Client.Abstractions" Version="1.0.10"/>
+    <PackageReference Include="WC.Service.PersonalData.gRPC.Client.Abstractions" Version="1.0.11" />
   </ItemGroup>
 
 </Project>

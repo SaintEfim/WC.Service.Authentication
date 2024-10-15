@@ -106,14 +106,14 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     }
 
     private static Task<List<Claim>> GenerateClaims(
-        string userId,
+        string id,
         string? role,
         CancellationToken cancellationToken = default)
     {
-        ArgumentException.ThrowIfNullOrEmpty(userId);
+        ArgumentException.ThrowIfNullOrEmpty(id);
         cancellationToken.ThrowIfCancellationRequested();
 
-        var claims = new List<Claim> { new(ClaimTypes.NameIdentifier, userId) };
+        var claims = new List<Claim> { new(ClaimTypes.NameIdentifier, id) };
 
         if (!string.IsNullOrEmpty(role))
         {

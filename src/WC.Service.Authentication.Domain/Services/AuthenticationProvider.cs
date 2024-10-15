@@ -50,10 +50,10 @@ public class AuthenticationProvider
             throw new AuthenticationException("Invalid email or password.");
         }
 
-        var accessToken = await _jwtTokenGenerator.GenerateToken(verifyResponse.PersonalDataId.ToString(),
+        var accessToken = await _jwtTokenGenerator.GenerateToken(verifyResponse.EmployeeId.ToString(),
             verifyResponse.Role, _authenticationSettings.AccessSecretKey,
             TimeSpan.Parse(_authenticationSettings.AccessHours), cancellationToken);
-        var refreshToken = await _jwtTokenGenerator.GenerateToken(verifyResponse.PersonalDataId.ToString(),
+        var refreshToken = await _jwtTokenGenerator.GenerateToken(verifyResponse.EmployeeId.ToString(),
             verifyResponse.Role, _authenticationSettings.RefreshSecretKey,
             TimeSpan.Parse(_authenticationSettings.RefreshHours), cancellationToken);
 
