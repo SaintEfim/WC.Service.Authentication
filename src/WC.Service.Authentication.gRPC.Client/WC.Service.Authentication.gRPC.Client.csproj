@@ -4,9 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>WC.Service.Authentication.gRPC.Client</PackageId>
-    <Version>1.0.4</Version>
-    <Authors>SaintEfim</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="8.0.0"/>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0"/>
-    <PackageReference Include="Grpc.Net.Client" Version="2.65.0"/>
+    <PackageReference Include="Autofac" Version="8.2.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
   </ItemGroup>
 
 </Project>

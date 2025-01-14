@@ -5,9 +5,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>WC.Service.Authentication.gRPC.Client</RootNamespace>
-    <PackageId>WC.Service.Authentication.gRPC.Client.Abstractions</PackageId>
-    <Version>1.0.4</Version>
-    <Authors>SaintEfim</Authors>
   </PropertyGroup>
 
 </Project>
