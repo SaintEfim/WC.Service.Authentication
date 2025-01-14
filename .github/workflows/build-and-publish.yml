@@ -2,6 +2,8 @@
 
 on:
   push:
+    branches:
+      - main # Триггер срабатывает только при пуше в ветку main
 
 jobs:
   build-docker:
@@ -27,6 +29,7 @@ jobs:
   push-docker:
     runs-on: ubuntu-latest
     needs: build-docker
+    if: github.ref == 'refs/heads/main' # Проверка: выполняется только для ветки main
 
     steps:
       - name: Checkout code
@@ -54,6 +57,7 @@ jobs:
   publish-nuget:
     runs-on: ubuntu-latest
     needs: push-docker
+    if: github.ref == 'refs/heads/main' # Проверка: выполняется только для ветки main
 
     env:
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
@@ -117,4 +121,3 @@ jobs:
           # Process each package
           publish_package "wc.service.authentication.grpc.client.abstractions" "src/WC.Service.Authentication.gRPC.Client.Abstractions/WC.Service.Authentication.gRPC.Client.Abstractions.csproj"
           publish_package "wc.service.authentication.grpc.client" "src/WC.Service.Authentication.gRPC.Client/WC.Service.Authentication.gRPC.Client.csproj"
-
