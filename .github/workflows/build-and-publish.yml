@@ -1,0 +1,123 @@
+﻿name: Build And Publish
+
+on:
+  push:
+    branches:
+      - main # Триггер срабатывает только при пуше в ветку main
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./src/WC.Service.Authentication.API/Dockerfile
+          push: false
+          tags: test/app:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  push-docker:
+    runs-on: ubuntu-latest
+    needs: build-docker
+    if: github.ref == 'refs/heads/main' # Проверка: выполняется только для ветки main
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./src/WC.Service.Authentication.API/Dockerfile
+          push: true
+          tags: saintefim/wc-service-authentication:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  publish-nuget:
+    runs-on: ubuntu-latest
+    needs: push-docker
+    if: github.ref == 'refs/heads/main' # Проверка: выполняется только для ветки main
+
+    env:
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install xmlstarlet
+        run: sudo apt-get install -y xmlstarlet
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build and Publish Libraries
+        run: |
+          publish_package() {
+            PACKAGE_ID=$1
+            PROJECT_PATH=$2
+            echo "Processing package: $PACKAGE_ID"
+
+            # Get the latest version from NuGet
+            PACKAGE_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/${PACKAGE_ID}/index.json | jq -r '.versions[-1]')
+            if [ -z "$PACKAGE_VERSION" ]; then
+              echo "No versions found for $PACKAGE_ID. Starting from 1.0.0."
+              NEW_VERSION="1.0.0"
+            else
+              echo "Latest version of $PACKAGE_ID: $PACKAGE_VERSION"
+              NEW_VERSION=$(echo $PACKAGE_VERSION | awk -F. -v OFS=. '{$NF++; print}')
+            fi
+            echo "New version: $NEW_VERSION"
+
+            # Update .csproj file with new version
+            echo "Updating version in $PROJECT_PATH"
+            xmlstarlet ed --inplace \
+            -s "/Project/PropertyGroup" -t elem -n "Version" -v "$NEW_VERSION" "$PROJECT_PATH" \
+            || xmlstarlet ed --inplace -u "//PropertyGroup/Version" -v "$NEW_VERSION" "$PROJECT_PATH"
+
+            # Display the updated .csproj file for debugging
+            echo "Updated .csproj:"
+            cat "$PROJECT_PATH"
+
+            # Build and pack package
+            dotnet build $PROJECT_PATH --configuration Release
+            dotnet pack $PROJECT_PATH --configuration Release
+
+            # Determine the output path of the .nupkg file
+            NUPKG_FILE=$(find "$(dirname "$PROJECT_PATH")/bin/Release" -name "*.nupkg" -type f)
+            echo "NUPKG File $NUPKG_FILE"
+            if [ -z "$NUPKG_FILE" ]; then
+              echo "Error: .nupkg file not found for $PACKAGE_ID"
+              exit 1
+            fi
+
+            # Push package to NuGet
+            dotnet nuget push "$NUPKG_FILE" -k $NUGET_API_KEY -s https://api.nuget.org/v3/index.json --skip-duplicate
+          }
+
+          # Process each package
+          publish_package "wc.service.authentication.grpc.client.abstractions" "src/WC.Service.Authentication.gRPC.Client.Abstractions/WC.Service.Authentication.gRPC.Client.Abstractions.csproj"
+          publish_package "wc.service.authentication.grpc.client" "src/WC.Service.Authentication.gRPC.Client/WC.Service.Authentication.gRPC.Client.csproj"

@@ -17,9 +17,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1"/>
-    <PackageReference Include="Google.Protobuf" Version="3.27.3"/>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0"/>
-    <PackageReference Include="Grpc.Tools" Version="2.65.0">
+    <PackageReference Include="Google.Protobuf" Version="3.29.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.69.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -27,15 +27,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NSwag.Annotations" Version="14.1.0"/>
-    <PackageReference Include="NSwag.AspNetCore" Version="14.1.0" />
-    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="14.1.0" />
-    <PackageReference Include="NSwag.CodeGeneration.TypeScript" Version="14.1.0" />
-    <PackageReference Include="NSwag.MSBuild" Version="14.1.0">
+    <PackageReference Include="NSwag.Annotations" Version="14.2.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
+    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="14.2.0" />
+    <PackageReference Include="NSwag.CodeGeneration.TypeScript" Version="14.2.0" />
+    <PackageReference Include="NSwag.MSBuild" Version="14.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="WC.Library.Web" Version="1.0.34" />
+    <PackageReference Include="WC.Library.Web" Version="1.0.39" />
   </ItemGroup>
 
   <ItemGroup>
