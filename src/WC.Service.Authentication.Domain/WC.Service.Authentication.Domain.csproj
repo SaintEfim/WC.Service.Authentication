@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
     <PackageReference Include="WC.Library.Domain" Version="1.0.31" />
     <PackageReference Include="WC.Library.Shared" Version="1.0.10" />
-    <PackageReference Include="WC.Service.PersonalData.gRPC.Client" Version="1.0.12" />
+    <PackageReference Include="WC.Service.PersonalData.gRPC.Client" Version="1.0.13" />
   </ItemGroup>
 
   <ItemGroup>
