@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using WC.Library.Web.Controllers;
@@ -60,6 +61,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     /// <param name="refreshToken">The refresh token.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
     [HttpPost("refresh")]
+    [Authorize(Roles = "Admin, User")]
     [OpenApiOperation(nameof(RefreshToken))]
     [SwaggerResponse(Status200OK, typeof(AuthenticationLoginResponseDto))]
     public async Task<ActionResult<AuthenticationLoginResponseDto>> RefreshToken(
@@ -76,6 +78,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     /// <param name="authenticationResetPassword">The reset password request data.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
     [HttpPatch("authenticationResetPassword")]
+    [Authorize(Roles = "Admin, User")]
     [OpenApiOperation(nameof(ResetPassword))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
