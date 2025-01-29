@@ -58,6 +58,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     }
 
     [HttpGet("getId")]
+    [Authorize(Roles = "Admin, User")]
     [SwaggerResponse(Status200OK, typeof(ModelBase))]
     [SwaggerResponse(Status401Unauthorized, typeof(ErrorDto))]
     [OpenApiOperation(nameof(GetId))]
