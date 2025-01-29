@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using WC.Library.Domain.Models;
 using WC.Library.Web.Controllers;
 using WC.Library.Web.Models;
 using WC.Service.Authentication.API.Models;
@@ -53,6 +55,27 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
                 cancellationToken);
 
         return Ok(Mapper.Map<AuthenticationLoginResponseDto>(createResult));
+    }
+
+    [HttpGet("getId")]
+    [SwaggerResponse(Status200OK, typeof(ModelBase))]
+    [SwaggerResponse(Status401Unauthorized, typeof(ErrorDto))]
+    [OpenApiOperation(nameof(GetId))]
+    public IActionResult GetId()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim))
+        {
+            return Unauthorized();
+        }
+
+        if (!Guid.TryParse(userIdClaim, out var userId))
+        {
+            return BadRequest("Invalid user ID format");
+        }
+
+        return Ok(new ModelBase { Id = userId });
     }
 
     /// <summary>
