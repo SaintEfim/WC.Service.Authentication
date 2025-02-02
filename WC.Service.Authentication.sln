@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.g
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.gRPC.Client.Abstractions", "src\WC.Service.Authentication.gRPC.Client.Abstractions\WC.Service.Authentication.gRPC.Client.Abstractions.csproj", "{E4756BC4-5E0A-4703-8E12-7DB9FF226223}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC.Service.Authentication.AuthorizationAdmin", "src\WC.Service.Authentication.AuthorizationAdmin\WC.Service.Authentication.AuthorizationAdmin.csproj", "{B6C23169-26F0-458B-A4B4-8814703A04FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{E4756BC4-5E0A-4703-8E12-7DB9FF226223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4756BC4-5E0A-4703-8E12-7DB9FF226223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4756BC4-5E0A-4703-8E12-7DB9FF226223}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6C23169-26F0-458B-A4B4-8814703A04FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6C23169-26F0-458B-A4B4-8814703A04FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6C23169-26F0-458B-A4B4-8814703A04FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6C23169-26F0-458B-A4B4-8814703A04FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7E836AD9-F407-44E9-B491-33827688D807} = {DD771FBF-3459-4511-86AF-3D1F18142C39}

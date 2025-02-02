@@ -26,6 +26,16 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Build Docker Image for AuthorizationAdmin
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./src/WC.Service.Authentication.AuthorizationAdmin/Dockerfile
+          push: false
+          tags: test/app-authorizationadmin:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   push-docker:
     runs-on: ubuntu-latest
     needs: build-docker
@@ -51,6 +61,16 @@ jobs:
           file: ./src/WC.Service.Authentication.API/Dockerfile
           push: true
           tags: saintefim/wc-service-authentication:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Push Docker Image for AuthorizationAdmin
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./src/WC.Service.Authentication.AuthorizationAdmin/Dockerfile
+          push: true
+          tags: saintefim/wc-service-authentication-authorizationadmin:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

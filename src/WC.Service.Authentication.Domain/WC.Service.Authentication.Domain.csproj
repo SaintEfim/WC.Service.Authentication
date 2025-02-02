@@ -10,9 +10,9 @@
     <PackageReference Include="Autofac" Version="8.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.1" />
-    <PackageReference Include="WC.Library.Domain" Version="1.0.36" />
+    <PackageReference Include="WC.Library.Domain" Version="1.0.37" />
     <PackageReference Include="WC.Library.Shared" Version="1.0.10" />
-    <PackageReference Include="WC.Service.PersonalData.gRPC.Client" Version="1.0.26" />
+    <PackageReference Include="WC.Service.PersonalData.gRPC.Client" Version="1.0.27" />
   </ItemGroup>
 
   <ItemGroup>
