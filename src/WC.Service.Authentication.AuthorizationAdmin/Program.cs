@@ -34,6 +34,16 @@ internal static class Program
 
         builder.RegisterModule<AuthenticationDomainModule>();
         builder.RegisterType<AuthorizationAdmin>();
+        builder.Register(context =>
+            {
+                var configuration = context.Resolve<IConfiguration>();
+                var options = new AdminSettingsOptions();
+                configuration.GetSection("AdminSettings")
+                    .Bind(options);
+                return options;
+            })
+            .As<AdminSettingsOptions>()
+            .SingleInstance();
 
         var container = builder.Build();
 

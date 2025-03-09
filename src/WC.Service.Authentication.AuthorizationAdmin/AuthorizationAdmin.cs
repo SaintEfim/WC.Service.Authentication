@@ -8,32 +8,35 @@ public class AuthorizationAdmin
 {
     private readonly IAuthenticationProvider _authenticationProvider;
     private readonly ILogger<AuthorizationAdmin> _logger;
+    private readonly AdminSettingsOptions _options;
 
     public AuthorizationAdmin(
         ILogger<AuthorizationAdmin> logger,
-        IAuthenticationProvider authenticationProvider)
+        IAuthenticationProvider authenticationProvider,
+        AdminSettingsOptions options)
     {
         _authenticationProvider = authenticationProvider;
         _logger = logger;
+        _options = options;
     }
 
     public async Task Create(
         CancellationToken cancellationToken = default)
     {
-        var emailLocalPart = Environment.GetEnvironmentVariable("ADMIN_EMAIL_LOCAL_PART") ?? "admin";
-        var emailDomain = Environment.GetEnvironmentVariable("ADMIN_EMAIL_DOMAIN") ?? "admin.com";
+        var emailLocalPart = _options.AdminEmailLocalPart ?? "admin";
+        var emailDomain = _options.AdminEmailDomain ?? "admin.com";
 
         var authenticationLogin = new AuthenticationLoginRequestModel
         {
             Email = $"{emailLocalPart}@{emailDomain}",
-            Password = Environment.GetEnvironmentVariable("ADMIN_REGISTRATION_PASSWORD") ?? "Admin@12345678",
+            Password = _options.AdminRegistrationPassword ?? "Admin@12345678"
         };
 
         try
         {
             var response = await _authenticationProvider.Login(authenticationLogin, cancellationToken);
 
-            _logger.LogInformation("Registration successful");
+            _logger.LogInformation("Authorization successful");
 
             _logger.LogInformation(
                 $"AccessToken: {response.AccessToken}\nRefreshToken: {response.RefreshToken}\nExpiresIn: {response.ExpiresIn}");
