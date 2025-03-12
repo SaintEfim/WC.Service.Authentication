@@ -38,16 +38,20 @@ public class AuthenticationProvider
         Validate<AuthenticationLoginRequestModel, IDomainCreateValidator>(authenticationLoginRequest,
             cancellationToken);
 
-        var verifyResponse = await _personalDataClient.VerifyCredentials(
-            new VerifyCredentialsRequestModel
-            {
-                Email = authenticationLoginRequest.Email,
-                Password = authenticationLoginRequest.Password
-            }, cancellationToken);
+        VerifyCredentialsResponseModel verifyResponse;
 
-        if (verifyResponse == null)
+        try
         {
-            throw new AuthenticationException("Invalid email or password.");
+            verifyResponse = await _personalDataClient.VerifyCredentials(
+                new VerifyCredentialsRequestModel
+                {
+                    Email = authenticationLoginRequest.Email,
+                    Password = authenticationLoginRequest.Password
+                }, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            throw new AuthenticationException("Invalid email or password.", e);
         }
 
         var accessToken = await _jwtTokenGenerator.GenerateToken(verifyResponse.EmployeeId.ToString(),

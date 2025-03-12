@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using WC.Library.Domain.Models;
 using WC.Library.Web.Controllers;
 using WC.Library.Web.Models;
 using WC.Service.Authentication.API.Models;
@@ -54,12 +57,35 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
         return Ok(Mapper.Map<AuthenticationLoginResponseDto>(createResult));
     }
 
+    [HttpGet("getId")]
+    [Authorize(Roles = "Admin, User")]
+    [SwaggerResponse(Status200OK, typeof(ModelBase))]
+    [SwaggerResponse(Status401Unauthorized, typeof(ErrorDto))]
+    [OpenApiOperation(nameof(GetId))]
+    public IActionResult GetId()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userIdClaim))
+        {
+            return Unauthorized();
+        }
+
+        if (!Guid.TryParse(userIdClaim, out var userId))
+        {
+            return BadRequest("Invalid user ID format");
+        }
+
+        return Ok(new ModelBase { Id = userId });
+    }
+
     /// <summary>
     ///     Refreshes a employee's login session.
     /// </summary>
     /// <param name="refreshToken">The refresh token.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
     [HttpPost("refresh")]
+    [Authorize(Roles = "Admin, User")]
     [OpenApiOperation(nameof(RefreshToken))]
     [SwaggerResponse(Status200OK, typeof(AuthenticationLoginResponseDto))]
     public async Task<ActionResult<AuthenticationLoginResponseDto>> RefreshToken(
@@ -76,6 +102,7 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
     /// <param name="authenticationResetPassword">The reset password request data.</param>
     /// <param name="cancellationToken">The operation cancellation token.</param>
     [HttpPatch("authenticationResetPassword")]
+    [Authorize(Roles = "Admin, User")]
     [OpenApiOperation(nameof(ResetPassword))]
     [SwaggerResponse(Status200OK, typeof(void))]
     [SwaggerResponse(Status404NotFound, typeof(ErrorDto))]
