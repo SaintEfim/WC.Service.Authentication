@@ -57,6 +57,9 @@ public class AuthenticationController : ApiControllerBase<AuthenticationControll
         return Ok(Mapper.Map<AuthenticationLoginResponseDto>(createResult));
     }
 
+    /// <summary>
+    ///      Retrieves the ID of the currently authenticated employee.
+    /// </summary>
     [HttpGet("getId")]
     [Authorize(Roles = "Admin, User")]
     [SwaggerResponse(Status200OK, typeof(ModelBase))]

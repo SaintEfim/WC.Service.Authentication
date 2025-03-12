@@ -60,6 +60,45 @@
         }
       }
     },
+    "/api/v1/authentication/getId": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Retrieves the ID of the currently authenticated employee.",
+        "operationId": "GetId",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelBase"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Admin",
+              " User"
+            ]
+          }
+        ]
+      }
+    },
     "/api/v1/authentication/refresh": {
       "post": {
         "tags": [
@@ -89,7 +128,15 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Admin",
+              " User"
+            ]
+          }
+        ]
       }
     },
     "/api/v1/authentication/authenticationResetPassword": {
@@ -126,7 +173,15 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Admin",
+              " User"
+            ]
+          }
+        ]
       }
     }
   },
@@ -208,6 +263,16 @@
             "type": "string",
             "description": "The password of the employee.\n            ",
             "minLength": 1
+          }
+        }
+      },
+      "ModelBase": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
           }
         }
       },
