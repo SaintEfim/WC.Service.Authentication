@@ -9,7 +9,7 @@ using WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 using WC.Service.PersonalData.gRPC.Client.Clients;
 using WC.Service.PersonalData.gRPC.Client.Models.Verify;
 
-namespace WC.Service.Authentication.Domain.Services;
+namespace WC.Service.Authentication.Domain.Services.Authentication;
 
 public class AuthenticationProvider
     : ValidatorBase<ModelBase>,

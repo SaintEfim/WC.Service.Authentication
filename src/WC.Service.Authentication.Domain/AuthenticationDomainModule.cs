@@ -3,6 +3,7 @@ using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using WC.Service.Authentication.Domain.Helpers;
 using WC.Service.Authentication.Domain.Services;
+using WC.Service.Authentication.Domain.Services.Authentication;
 using WC.Service.PersonalData.gRPC.Client;
 
 namespace WC.Service.Authentication.Domain;

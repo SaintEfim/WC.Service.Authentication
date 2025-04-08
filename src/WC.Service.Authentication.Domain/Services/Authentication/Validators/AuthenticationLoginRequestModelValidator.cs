@@ -2,7 +2,7 @@
 using WC.Library.Domain.Validators;
 using WC.Service.Authentication.Domain.Models.AuthenticationLogin;
 
-namespace WC.Service.Authentication.Domain.Services.Validators;
+namespace WC.Service.Authentication.Domain.Services.Authentication.Validators;
 
 public class AuthenticationLoginRequestModelValidator
     : AbstractValidator<AuthenticationLoginRequestModel>,
