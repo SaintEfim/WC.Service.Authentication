@@ -14,7 +14,7 @@
       "verbose": true,
       "workingDirectory": null,
       "aspNetCoreEnvironment": "Development",
-      "output": "WC.Service.Authentication.API.swagger.json",
+      "output": "WC.Service.Authentication.API.swagger.yaml",
       "newLineBehavior": "Auto"
     }
   },
